@@ -63,8 +63,6 @@ function TopGames() {
     setPageNumber({ start: pageNumber.start - 20, end: pageNumber.end - 20 });
   };
 
-  console.log(topGamesData);
-
   return (
     <div>
       <div>Top Games</div>
