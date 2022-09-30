@@ -35,7 +35,7 @@ function TopGames() {
     getTopGames();
   }, []);
 
-  const nextGamePage = async (page: string) => {
+  const nextGamePage = async () => {
     const res = await fetch(
       `https://api.twitch.tv/helix/games/top?after=${topGamesData?.pagination.cursor}`,
       {
@@ -48,6 +48,8 @@ function TopGames() {
     );
 
     const data = await res.json();
+
+    setTopGamesData(data);
   };
 
   console.log(topGamesData);
@@ -56,8 +58,9 @@ function TopGames() {
     <div>
       <div>Top Games</div>
       {topGamesData?.data?.map((game, index) => {
-        return <div key={index}></div>;
+        return <div key={index}>{game.name}</div>;
       })}
+      {topGamesData && <button onClick={nextGamePage}>Next page</button>}
     </div>
   );
 }
