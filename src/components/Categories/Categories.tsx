@@ -13,7 +13,7 @@ function Categories() {
   const [pageNumber, setPageNumber] = useState({ start: 0, end: 20 });
 
   useEffect(() => {
-    const getTopGames = async () => {
+    const getCategoryData = async () => {
       let gameData: fullIndividualGameData[] = [];
       const res = await fetch(
         "https://api.twitch.tv/helix/games/top?first=100",
@@ -35,7 +35,7 @@ function Categories() {
       setGameDataRaw({ data: gameData, pagination: data.pagination });
     };
 
-    getTopGames();
+    getCategoryData();
   }, []);
 
   // useEffect(() => {
