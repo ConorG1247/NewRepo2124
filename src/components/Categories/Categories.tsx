@@ -134,9 +134,7 @@ function Categories() {
             </div>
           );
         })}
-      {sortedGameData && (
-        <button onClick={() => nextGamePage()}>Next page</button>
-      )}
+      {gameDataRaw && <button onClick={() => nextGamePage()}>Next page</button>}
       {pageNumber.start > 0 && (
         <button onClick={() => prevGamePage()}>Prev page</button>
       )}
