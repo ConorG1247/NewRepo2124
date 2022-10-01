@@ -1,15 +1,5 @@
 import { useState, useEffect } from "react";
-
-type individualGameData = {
-  id: string;
-  name: string;
-  box_art_url: string;
-};
-
-type gameData = {
-  data: individualGameData[];
-  pagination: { cursor: string };
-};
+import { gameData, fullGameData, fullChannelData } from "libs/types";
 
 function TopGames() {
   const [topGamesData, setTopGamesData] = useState<gameData>();
@@ -29,6 +19,23 @@ function TopGames() {
       );
 
       const data: gameData = await res.json();
+
+      data?.data.forEach(async (game) => {
+        const individualGameRes = await fetch(
+          `https://api.twitch.tv/helix/streams?game_id=${game.id}&first=30`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: "Bearer hjn4lfvaa9vd04rv4ttw3nlnifndi7",
+              "Client-Id": "hra765tyzo51u6ju9i7ihfmckwzuss",
+            },
+          }
+        );
+
+        const data: fullChannelData = await individualGameRes.json();
+
+        data?.data?.forEach(async (channel) => {});
+      });
 
       setTopGamesData(data);
     };
