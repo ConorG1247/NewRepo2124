@@ -9,6 +9,7 @@ import {
 function TopGames() {
   const [gameDataRaw, setGameDataRaw] = useState<fullGameData>();
   const [topGamesData, setTopGamesData] = useState<fullGameData>();
+  const [sortedGameData, setSortedGameData] = useState<fullGameData>();
   const [pageNumber, setPageNumber] = useState({ start: 0, end: 20 });
 
   useEffect(() => {
@@ -72,7 +73,18 @@ function TopGames() {
     });
   }, [gameDataRaw]);
 
-  useEffect(() => {}, [topGamesData]);
+  useEffect(() => {
+    if (topGamesData) {
+      const sortedViewCount = topGamesData.data.sort((a, b) => {
+        return b.viewers - a.viewers;
+      });
+
+      setSortedGameData({
+        data: sortedViewCount,
+        pagination: topGamesData.pagination,
+      });
+    }
+  }, [topGamesData]);
 
   const nextGamePage = async () => {
     if (gameDataRaw && pageNumber.start + 20 === gameDataRaw?.data?.length) {
@@ -104,7 +116,7 @@ function TopGames() {
   return (
     <div>
       <div>Top Games</div>
-      {topGamesData?.data
+      {sortedGameData?.data
         ?.slice(pageNumber.start, pageNumber.end)
         .map((game, index) => {
           return (
@@ -114,7 +126,9 @@ function TopGames() {
             </div>
           );
         })}
-      {gameDataRaw && <button onClick={() => nextGamePage()}>Next page</button>}
+      {sortedGameData && (
+        <button onClick={() => nextGamePage()}>Next page</button>
+      )}
       {pageNumber.start > 0 && (
         <button onClick={() => prevGamePage()}>Prev page</button>
       )}
