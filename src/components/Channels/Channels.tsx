@@ -77,9 +77,25 @@ function Channels() {
             </div>
           );
         })}
-      {channelData && <button onClick={() => nextGamePage()}>Next page</button>}
+      {channelData && (
+        <button
+          onClick={() => {
+            nextGamePage();
+            window.scrollTo(0, 0);
+          }}
+        >
+          Next page
+        </button>
+      )}
       {pageNumber.start > 0 && (
-        <button onClick={() => prevGamePage()}>Prev page</button>
+        <button
+          onClick={() => {
+            prevGamePage();
+            window.scrollTo(0, 0);
+          }}
+        >
+          Prev page
+        </button>
       )}
     </div>
   );

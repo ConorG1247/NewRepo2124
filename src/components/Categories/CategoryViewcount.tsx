@@ -1,8 +1,15 @@
 import { useState, useEffect } from "react";
-import { gameData, fullGameData, fullIndividualGameData } from "libs/types";
+import {
+  gameData,
+  fullGameData,
+  fullIndividualGameData,
+  fullChannelData,
+} from "libs/types";
 
 function Categories() {
   const [gameDataRaw, setGameDataRaw] = useState<fullGameData>();
+  const [categoriesData, setCategoriesData] = useState<fullGameData>();
+  const [sortedGameData, setSortedGameData] = useState<fullGameData>();
   const [pageNumber, setPageNumber] = useState({ start: 0, end: 20 });
 
   useEffect(() => {
@@ -30,6 +37,54 @@ function Categories() {
 
     getCategoryData();
   }, []);
+
+  // useEffect(() => {
+  //   let updatedGameData: fullGameData | undefined = gameDataRaw;
+
+  //   gameDataRaw?.data.forEach(async (game) => {
+  //     let viewerCount = { game: "", viewers: 0 };
+  //     const individualGameRes = await fetch(
+  //       `https://api.twitch.tv/helix/streams?game_id=${game.id}&first=30`,
+  //       {
+  //         method: "GET",
+  //         headers: {
+  //           Authorization: "Bearer hjn4lfvaa9vd04rv4ttw3nlnifndi7",
+  //           "Client-Id": "hra765tyzo51u6ju9i7ihfmckwzuss",
+  //         },
+  //       }
+  //     );
+
+  //     const data: fullChannelData = await individualGameRes.json();
+
+  //     data?.data.forEach((channel) => {
+  //       viewerCount = {
+  //         game: game.name,
+  //         viewers: viewerCount.viewers + channel.viewer_count,
+  //       };
+  //     });
+
+  //     let index = gameDataRaw.data.indexOf(game);
+
+  //     if (updatedGameData) {
+  //       updatedGameData.data[index].viewers = viewerCount.viewers;
+  //     }
+
+  //     setCategoriesData(updatedGameData);
+  //   });
+  // }, [gameDataRaw]);
+
+  // useEffect(() => {
+  //   if (categoriesData) {
+  //     const sortedViewCount = categoriesData.data.sort((a, b) => {
+  //       return b.viewers - a.viewers;
+  //     });
+
+  //     setSortedGameData({
+  //       data: sortedViewCount,
+  //       pagination: categoriesData.pagination,
+  //     });
+  //   }
+  // }, [categoriesData]);
 
   const nextGamePage = async () => {
     if (
