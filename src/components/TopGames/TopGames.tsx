@@ -44,7 +44,7 @@ function TopGames() {
     gameDataRaw?.data.forEach(async (game) => {
       let viewerCount = { game: "", viewers: 0 };
       const individualGameRes = await fetch(
-        `https://api.twitch.tv/helix/streams?game_id=${game.id}&first=40`,
+        `https://api.twitch.tv/helix/streams?game_id=${game.id}&first=30`,
         {
           method: "GET",
           headers: {
@@ -84,10 +84,16 @@ function TopGames() {
         pagination: topGamesData.pagination,
       });
     }
+
+    console.log(topGamesData);
   }, [topGamesData]);
+  console.log(sortedGameData);
 
   const nextGamePage = async () => {
-    if (gameDataRaw && pageNumber.start + 20 === gameDataRaw?.data?.length) {
+    if (
+      gameDataRaw &&
+      pageNumber.start + 20 === gameDataRaw?.data?.length - 20
+    ) {
       const res = await fetch(
         `https://api.twitch.tv/helix/games/top?first=100&after=${gameDataRaw?.pagination.cursor}`,
         {
