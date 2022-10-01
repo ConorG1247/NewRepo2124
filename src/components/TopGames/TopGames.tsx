@@ -1,16 +1,20 @@
 import { useState, useEffect } from "react";
-import { gameData, fullGameData, fullChannelData } from "libs/types";
+import {
+  gameData,
+  fullGameData,
+  fullChannelData,
+  individualChannelData,
+} from "libs/types";
 
 function TopGames() {
-  const [topGamesData, setTopGamesData] = useState<gameData>();
+  const [gameDataRaw, setGameDataRaw] = useState<gameData>();
+  const [individualChannelData, setIndividualChannelData] =
+    useState<individualChannelData[]>();
+  const [topGamesData, setTopGamesData] = useState<fullGameData>();
   const [pageNumber, setPageNumber] = useState({ start: 0, end: 20 });
 
   useEffect(() => {
     const getTopGames = async () => {
-      let fullGameData: fullGameData = {
-        data: [],
-        pagination: { cursor: "" },
-      };
       const res = await fetch(
         "https://api.twitch.tv/helix/games/top?first=100",
         {
@@ -24,39 +28,39 @@ function TopGames() {
 
       const data: gameData = await res.json();
 
-      fullGameData.pagination = { ...data.pagination };
-
-      data.data.forEach(async (game) => {
-        fullGameData?.data.push({ ...game, viewers: 0 });
-      });
-
-      fullGameData?.data.forEach(async (game, index) => {
-        const individualGameRes = await fetch(
-          `https://api.twitch.tv/helix/streams?game_id=${game.id}&first=100`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: "Bearer hjn4lfvaa9vd04rv4ttw3nlnifndi7",
-              "Client-Id": "hra765tyzo51u6ju9i7ihfmckwzuss",
-            },
-          }
-        );
-
-        const data: fullChannelData = await individualGameRes.json();
-
-        data?.data?.forEach(async (channel) => {
-          fullGameData.data[index].viewers =
-            fullGameData.data[index].viewers + channel.viewer_count;
-        });
-      });
-
-      console.log(fullGameData);
-
-      setTopGamesData(data);
+      setGameDataRaw(data);
     };
 
     getTopGames();
   }, []);
+
+  useEffect(() => {
+    gameDataRaw?.data.forEach(async (game, index) => {
+      const individualGameRes = await fetch(
+        `https://api.twitch.tv/helix/streams?game_id=${game.id}&first=100`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer hjn4lfvaa9vd04rv4ttw3nlnifndi7",
+            "Client-Id": "hra765tyzo51u6ju9i7ihfmckwzuss",
+          },
+        }
+      );
+
+      const data: fullChannelData = await individualGameRes.json();
+
+      setIndividualChannelData(data.data);
+    });
+  }, [gameDataRaw]);
+
+  useEffect(() => {
+    let viewerCount = 0;
+    individualChannelData?.forEach((channel) => {
+      viewerCount = viewerCount + channel.viewer_count;
+    });
+  }, [individualChannelData]);
+
+  console.log(individualChannelData);
 
   const nextGamePage = async () => {
     if (topGamesData && pageNumber.start + 20 === topGamesData?.data?.length) {
@@ -71,7 +75,7 @@ function TopGames() {
         }
       );
 
-      const data: gameData = await res.json();
+      const data: fullGameData = await res.json();
 
       setTopGamesData({
         data: [...topGamesData.data, ...data.data],
@@ -91,7 +95,12 @@ function TopGames() {
       {topGamesData?.data
         ?.slice(pageNumber.start, pageNumber.end)
         .map((game, index) => {
-          return <div key={index}>{game.name}</div>;
+          return (
+            <div key={index}>
+              <div>{game.name}</div>
+              {/* <div>{game.viewers}</div> */}
+            </div>
+          );
         })}
       {topGamesData && (
         <button onClick={() => nextGamePage()}>Next page</button>
