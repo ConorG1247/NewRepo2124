@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { gameData, fullGameData, fullIndividualGameData } from "libs/types";
 import CategoryDisplay from "./CategoryDisplay";
+import Pagination from "components/Pagination/Pagination";
 
 function Categories() {
   const [gameData, setGameData] = useState<fullGameData>();
@@ -90,39 +91,15 @@ function Categories() {
     }
   };
 
-  console.log(paginationData);
-
   return (
     <div>
       <CategoryDisplay gameData={gameData} pageNumber={pageNumber} />
-      {gameData && (
-        <button
-          onClick={() => {
-            nextGamePage();
-            // window.scrollTo(0, 0);
-          }}
-        >
-          Next page
-        </button>
-      )}
-      {paginationData.length > 0 &&
-        paginationData.map((page, index) => {
-          return (
-            <div key={index}>
-              <div onClick={() => paginationPageSelect(page)}>{page.page}</div>
-            </div>
-          );
-        })}
-      {pageNumber.start > 0 && (
-        <button
-          onClick={() => {
-            prevGamePage();
-            // window.scrollTo(0, 0);
-          }}
-        >
-          Prev page
-        </button>
-      )}
+      <Pagination
+        paginationData={paginationData}
+        nextPage={nextGamePage}
+        prevPage={prevGamePage}
+        pageSelect={paginationPageSelect}
+      />
     </div>
   );
 }
