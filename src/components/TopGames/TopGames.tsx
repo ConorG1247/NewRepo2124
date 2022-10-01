@@ -38,56 +38,53 @@ function TopGames() {
     getTopGames();
   }, []);
 
-  useEffect(() => {
-    let updatedGameData: fullGameData | undefined = gameDataRaw;
+  // useEffect(() => {
+  //   let updatedGameData: fullGameData | undefined = gameDataRaw;
 
-    gameDataRaw?.data.forEach(async (game) => {
-      let viewerCount = { game: "", viewers: 0 };
-      const individualGameRes = await fetch(
-        `https://api.twitch.tv/helix/streams?game_id=${game.id}&first=30`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: "Bearer hjn4lfvaa9vd04rv4ttw3nlnifndi7",
-            "Client-Id": "hra765tyzo51u6ju9i7ihfmckwzuss",
-          },
-        }
-      );
+  //   gameDataRaw?.data.forEach(async (game) => {
+  //     let viewerCount = { game: "", viewers: 0 };
+  //     const individualGameRes = await fetch(
+  //       `https://api.twitch.tv/helix/streams?game_id=${game.id}&first=30`,
+  //       {
+  //         method: "GET",
+  //         headers: {
+  //           Authorization: "Bearer hjn4lfvaa9vd04rv4ttw3nlnifndi7",
+  //           "Client-Id": "hra765tyzo51u6ju9i7ihfmckwzuss",
+  //         },
+  //       }
+  //     );
 
-      const data: fullChannelData = await individualGameRes.json();
+  //     const data: fullChannelData = await individualGameRes.json();
 
-      data?.data.forEach((channel) => {
-        viewerCount = {
-          game: game.name,
-          viewers: viewerCount.viewers + channel.viewer_count,
-        };
-      });
+  //     data?.data.forEach((channel) => {
+  //       viewerCount = {
+  //         game: game.name,
+  //         viewers: viewerCount.viewers + channel.viewer_count,
+  //       };
+  //     });
 
-      let index = gameDataRaw.data.indexOf(game);
+  //     let index = gameDataRaw.data.indexOf(game);
 
-      if (updatedGameData) {
-        updatedGameData.data[index].viewers = viewerCount.viewers;
-      }
+  //     if (updatedGameData) {
+  //       updatedGameData.data[index].viewers = viewerCount.viewers;
+  //     }
 
-      setTopGamesData(updatedGameData);
-    });
-  }, [gameDataRaw]);
+  //     setTopGamesData(updatedGameData);
+  //   });
+  // }, [gameDataRaw]);
 
-  useEffect(() => {
-    if (topGamesData) {
-      const sortedViewCount = topGamesData.data.sort((a, b) => {
-        return b.viewers - a.viewers;
-      });
+  // useEffect(() => {
+  //   if (topGamesData) {
+  //     const sortedViewCount = topGamesData.data.sort((a, b) => {
+  //       return b.viewers - a.viewers;
+  //     });
 
-      setSortedGameData({
-        data: sortedViewCount,
-        pagination: topGamesData.pagination,
-      });
-    }
-
-    console.log(topGamesData);
-  }, [topGamesData]);
-  console.log(sortedGameData);
+  //     setSortedGameData({
+  //       data: sortedViewCount,
+  //       pagination: topGamesData.pagination,
+  //     });
+  //   }
+  // }, [topGamesData]);
 
   const nextGamePage = async () => {
     if (
@@ -121,14 +118,24 @@ function TopGames() {
 
   return (
     <div>
-      <div>Top Games</div>
-      {sortedGameData?.data
+      <div>Browse</div>
+      <div style={{ display: "flex" }}>
+        <div style={{ marginRight: 10 }}>Categories</div>
+        <div>Channels</div>
+      </div>
+      {gameDataRaw?.data
         ?.slice(pageNumber.start, pageNumber.end)
         .map((game, index) => {
           return (
             <div key={index}>
+              <img
+                src={game.box_art_url
+                  .replace("{width}", "285")
+                  .replace("{height}", "380")}
+                alt={game.name}
+                style={{ width: 187, height: 250 }}
+              />
               <div>{game.name}</div>
-              <div>{game.viewers}</div>
             </div>
           );
         })}
