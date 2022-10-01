@@ -27,7 +27,14 @@ function Pagination({
         paginationData.map((page, index) => {
           return (
             <div key={index}>
-              <div onClick={() => pageSelect(page)}>{page.page}</div>
+              <div
+                onClick={() => {
+                  pageSelect(page);
+                  window.scrollTo(0, 0);
+                }}
+              >
+                {page.page}
+              </div>
             </div>
           );
         })}

@@ -1,9 +1,17 @@
 import { useState, useEffect } from "react";
 import { fullChannelData } from "libs/types";
+import Pagination from "components/Pagination/Pagination";
 
 function Channels() {
   const [channelData, setChannelData] = useState<fullChannelData>();
   const [pageNumber, setPageNumber] = useState({ start: 0, end: 20 });
+  const [paginationData, setPaginationData] = useState<
+    {
+      page: number;
+      start: number;
+      end: number;
+    }[]
+  >([]);
 
   useEffect(() => {
     const getChannelData = async () => {
@@ -29,7 +37,7 @@ function Channels() {
     getChannelData();
   }, []);
 
-  const nextGamePage = async () => {
+  const nextChannelPage = async () => {
     if (
       channelData &&
       pageNumber.start + 20 >= channelData?.data?.length - 20
@@ -53,10 +61,34 @@ function Channels() {
       });
     }
     setPageNumber({ start: pageNumber.start + 20, end: pageNumber.end + 20 });
+    if (paginationData.length === 0) {
+      return setPaginationData([{ page: 1, start: 0, end: 20 }]);
+    }
+    setPaginationData([
+      ...paginationData,
+      {
+        page: paginationData.length + 1,
+        start: pageNumber.start,
+        end: pageNumber.end,
+      },
+    ]);
   };
 
-  const prevGamePage = async () => {
+  const prevChannelPage = () => {
     setPageNumber({ start: pageNumber.start - 20, end: pageNumber.end - 20 });
+    setPaginationData([...paginationData.slice(0, paginationData.length - 1)]);
+  };
+
+  const paginationPageSelect = (page: {
+    page: number;
+    start: number;
+    end: number;
+  }) => {
+    setPageNumber({ start: page.start, end: page.end });
+    setPaginationData([...paginationData.slice(0, page.page - 1)]);
+    if (paginationData.length === 0) {
+      setPaginationData([{ page: 1, start: 0, end: 20 }]);
+    }
   };
 
   return (
@@ -77,26 +109,12 @@ function Channels() {
             </div>
           );
         })}
-      {channelData && (
-        <button
-          onClick={() => {
-            nextGamePage();
-            window.scrollTo(0, 0);
-          }}
-        >
-          Next page
-        </button>
-      )}
-      {pageNumber.start > 0 && (
-        <button
-          onClick={() => {
-            prevGamePage();
-            window.scrollTo(0, 0);
-          }}
-        >
-          Prev page
-        </button>
-      )}
+      <Pagination
+        paginationData={paginationData}
+        nextPage={nextChannelPage}
+        prevPage={prevChannelPage}
+        pageSelect={paginationPageSelect}
+      />
     </div>
   );
 }
