@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { fullChannelData } from "libs/types";
 import Pagination from "components/Pagination/Pagination";
+import ChannelDisplay from "./ChannelDisplay";
 
 function Channels() {
   const [channelData, setChannelData] = useState<fullChannelData>();
@@ -93,22 +94,7 @@ function Channels() {
 
   return (
     <div>
-      {channelData?.data
-        .slice(pageNumber.start, pageNumber.end)
-        .map((channel, index) => {
-          return (
-            <div key={index}>
-              <img
-                src={channel.thumbnail_url
-                  .replace("{width}", "440")
-                  .replace("{height}", "248")}
-                alt={channel.user_name}
-              />
-              <div>{channel.user_name}</div>
-              <div>{channel.viewer_count.toLocaleString("en-US")}</div>
-            </div>
-          );
-        })}
+      <ChannelDisplay channelData={channelData} pageNumber={pageNumber} />
       <Pagination
         paginationData={paginationData}
         nextPage={nextChannelPage}
