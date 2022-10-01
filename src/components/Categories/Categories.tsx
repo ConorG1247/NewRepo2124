@@ -1,13 +1,21 @@
 import { useState, useEffect } from "react";
 import { gameData, fullGameData, fullIndividualGameData } from "libs/types";
+import CategoryDisplay from "./CategoryDisplay";
 
 function Categories() {
-  const [gameDataRaw, setGameDataRaw] = useState<fullGameData>();
+  const [gameData, setGameData] = useState<fullGameData>();
   const [pageNumber, setPageNumber] = useState({ start: 0, end: 20 });
+  const [paginationData, setPaginationData] = useState<
+    {
+      page: number;
+      start: number;
+      end: number;
+    }[]
+  >([]);
 
   useEffect(() => {
     const getCategoryData = async () => {
-      let gameData: fullIndividualGameData[] = [];
+      let initialGameData: fullIndividualGameData[] = [];
       const res = await fetch(
         "https://api.twitch.tv/helix/games/top?first=100",
         {
@@ -22,22 +30,19 @@ function Categories() {
       const data: gameData = await res.json();
 
       data.data.forEach((game) => {
-        gameData.push({ ...game, viewers: 0 });
+        initialGameData.push({ ...game, viewers: 0 });
       });
 
-      setGameDataRaw({ data: gameData, pagination: data.pagination });
+      setGameData({ data: initialGameData, pagination: data.pagination });
     };
 
     getCategoryData();
   }, []);
 
   const nextGamePage = async () => {
-    if (
-      gameDataRaw &&
-      pageNumber.start + 20 === gameDataRaw?.data?.length - 20
-    ) {
+    if (gameData && pageNumber.start + 20 === gameData?.data?.length - 20) {
       const res = await fetch(
-        `https://api.twitch.tv/helix/games/top?first=100&after=${gameDataRaw?.pagination.cursor}`,
+        `https://api.twitch.tv/helix/games/top?first=100&after=${gameData?.pagination.cursor}`,
         {
           method: "GET",
           headers: {
@@ -49,51 +54,70 @@ function Categories() {
 
       const data: fullGameData = await res.json();
 
-      setGameDataRaw({
-        data: [...gameDataRaw.data, ...data.data],
+      setGameData({
+        data: [...gameData.data, ...data.data],
         pagination: data.pagination,
       });
     }
     setPageNumber({ start: pageNumber.start + 20, end: pageNumber.end + 20 });
+    if (paginationData.length === 0) {
+      return setPaginationData([{ page: 1, start: 0, end: 20 }]);
+    }
+    setPaginationData([
+      ...paginationData,
+      {
+        page: paginationData.length + 1,
+        start: pageNumber.start,
+        end: pageNumber.end,
+      },
+    ]);
   };
 
-  const prevGamePage = async () => {
+  const prevGamePage = () => {
     setPageNumber({ start: pageNumber.start - 20, end: pageNumber.end - 20 });
+    setPaginationData([...paginationData.slice(0, paginationData.length - 1)]);
   };
+
+  const paginationPageSelect = (page: {
+    page: number;
+    start: number;
+    end: number;
+  }) => {
+    setPageNumber({ start: page.start, end: page.end });
+    setPaginationData([...paginationData.slice(0, page.page - 1)]);
+    if (paginationData.length === 0) {
+      setPaginationData([{ page: 1, start: 0, end: 20 }]);
+    }
+  };
+
+  console.log(paginationData);
 
   return (
     <div>
-      {gameDataRaw?.data
-        ?.slice(pageNumber.start, pageNumber.end)
-        .map((game, index) => {
-          return (
-            <div key={index}>
-              <img
-                src={game.box_art_url
-                  .replace("{width}", "285")
-                  .replace("{height}", "380")}
-                alt={game.name}
-                style={{ width: 187, height: 250 }}
-              />
-              <div>{game.name}</div>
-            </div>
-          );
-        })}
-      {gameDataRaw && (
+      <CategoryDisplay gameData={gameData} pageNumber={pageNumber} />
+      {gameData && (
         <button
           onClick={() => {
             nextGamePage();
-            window.scrollTo(0, 0);
+            // window.scrollTo(0, 0);
           }}
         >
           Next page
         </button>
       )}
+      {paginationData.length > 0 &&
+        paginationData.map((page, index) => {
+          return (
+            <div key={index}>
+              <div onClick={() => paginationPageSelect(page)}>{page.page}</div>
+            </div>
+          );
+        })}
       {pageNumber.start > 0 && (
         <button
           onClick={() => {
             prevGamePage();
-            window.scrollTo(0, 0);
+            // window.scrollTo(0, 0);
           }}
         >
           Prev page
