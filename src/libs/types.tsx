@@ -43,6 +43,19 @@ export type fullChannelData = {
   pagination: { cursor: string };
 };
 
+export type userData = {
+  broadcaster_type: string;
+  created_at: string;
+  description: string;
+  display_name: string;
+  id: string;
+  login: string;
+  offline_image_url: string;
+  profile_image_url: string;
+  type: string;
+  view_count: number;
+};
+
 export type channelDataAvatar = {
   game_id: string;
   game_name: string;

@@ -3,10 +3,13 @@ import {
   fullChannelData,
   liveChannelData,
   channelDataAvatar,
+  userData,
 } from "libs/types";
 
 function Channels() {
   const [channelData, setChannelData] = useState<liveChannelData>();
+  const [finalChannelData, setFinalChannelData] = useState<liveChannelData>();
+  const [userData, setUserData] = useState<{ data: userData[] }>();
   const [pageNumber, setPageNumber] = useState({ start: 0, end: 20 });
 
   useEffect(() => {
@@ -26,17 +29,29 @@ function Channels() {
       const data: fullChannelData = await res.json();
 
       data.data.forEach((channel) => {
-        channelDataFinal.push({ ...channel, profile: "" });
+        channelDataFinal.push({
+          ...channel,
+          profile: "",
+        });
       });
 
       setChannelData({
         data: [...channelDataFinal],
         pagination: data.pagination,
       });
+    };
 
-      data.data.forEach(async (channel) => {
+    getChannelData();
+  }, []);
+
+  useEffect(() => {
+    const getChannelImage = async () => {
+      let profileData = channelData;
+      let user: { data: userData[] } = { data: [] };
+
+      profileData?.data.forEach(async (channel) => {
         const res = await fetch(
-          `https://api.twitch.tv/helix/search/channels?query=${channel.user_login}&live_only=true`,
+          `https://api.twitch.tv/helix/users?id=${channel.user_id}`,
           {
             method: "GET",
             headers: {
@@ -45,32 +60,41 @@ function Channels() {
             },
           }
         );
-        const data: fullChannelData = await res.json();
+        const data: { data: userData[] } = await res.json();
 
-        channelDataFinal.forEach((updatedChannel, index) => {
-          if (updatedChannel.user_id === Object.values(channel)[1]) {
-            channelDataFinal[index].profile = data.data[0].thumbnail_url;
-          }
-        });
+        user.data.push(data.data[0]);
+
+        setUserData(user);
       });
 
-      if (channelData) {
-        setChannelData({
-          data: [...channelDataFinal],
+      if (profileData && channelData) {
+        setFinalChannelData({
+          data: [...profileData.data],
           pagination: channelData.pagination,
         });
       }
     };
 
-    getChannelData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    getChannelImage();
+  }, [channelData]);
 
-  console.log(channelData);
+  useEffect(() => {
+    let chanData = channelData;
+    channelData?.data.forEach((channel, index) => {
+      userData?.data.forEach((user) => {
+        if (channel.user_id === Object.values(user)[0] && chanData) {
+          chanData.data[index].profile = user.profile_image_url
+            .replace("300x", "50x")
+            .replace("300", "50");
+        }
+      });
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userData]);
 
   return (
     <div>
-      {channelData?.data
+      {finalChannelData?.data
         .slice(pageNumber.start, pageNumber.end)
         .map((channel, index) => {
           return (
@@ -81,6 +105,7 @@ function Channels() {
                   .replace("{height}", "248")}
                 alt={channel.user_name}
               />
+              <img src={channel.profile} alt={channel.user_name} />
               <div>{channel.user_name}</div>
               <div>{channel.viewer_count.toLocaleString("en-US")}</div>
             </div>
