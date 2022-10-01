@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import {
   gameData,
   fullGameData,
-  fullChannelData,
   fullIndividualGameData,
+  fullChannelData,
 } from "libs/types";
 
-function TopGames() {
+function Categories() {
   const [gameDataRaw, setGameDataRaw] = useState<fullGameData>();
-  const [topGamesData, setTopGamesData] = useState<fullGameData>();
+  const [categoriesData, setCategoriesData] = useState<fullGameData>();
   const [sortedGameData, setSortedGameData] = useState<fullGameData>();
   const [pageNumber, setPageNumber] = useState({ start: 0, end: 20 });
 
@@ -69,22 +69,22 @@ function TopGames() {
   //       updatedGameData.data[index].viewers = viewerCount.viewers;
   //     }
 
-  //     setTopGamesData(updatedGameData);
+  //     setCategoriesData(updatedGameData);
   //   });
   // }, [gameDataRaw]);
 
   // useEffect(() => {
-  //   if (topGamesData) {
-  //     const sortedViewCount = topGamesData.data.sort((a, b) => {
+  //   if (categoriesData) {
+  //     const sortedViewCount = categoriesData.data.sort((a, b) => {
   //       return b.viewers - a.viewers;
   //     });
 
   //     setSortedGameData({
   //       data: sortedViewCount,
-  //       pagination: topGamesData.pagination,
+  //       pagination: categoriesData.pagination,
   //     });
   //   }
-  // }, [topGamesData]);
+  // }, [categoriesData]);
 
   const nextGamePage = async () => {
     if (
@@ -144,4 +144,4 @@ function TopGames() {
   );
 }
 
-export default TopGames;
+export default Categories;
