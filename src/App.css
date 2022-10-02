@@ -94,7 +94,7 @@ body::-webkit-scrollbar-thumb {
 .main-title {
   font-size: 2.2rem;
   font-weight: bold;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .main-selection-container {
@@ -107,11 +107,13 @@ body::-webkit-scrollbar-thumb {
 
 .main-selection {
   border-bottom: 2px solid rgb(154, 242, 255, 0);
+  transition: 100ms;
 }
 
 .main-selection-selected {
   color: rgb(154, 242, 255);
   border-bottom: 2px solid rgb(154, 242, 255, 1);
+  transition: 100ms;
 }
 
 /* CATEGORY DISPLAY */
@@ -128,6 +130,13 @@ body::-webkit-scrollbar-thumb {
   margin: 10px 10px 10px 0px;
 }
 
+.category-game-title {
+  max-width: 187px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* CHANNEL DISPLAY */
 
 .channel-display-container {
@@ -139,7 +148,14 @@ body::-webkit-scrollbar-thumb {
   display: flex;
   flex-direction: column;
   padding: 10px;
-  margin: 10px 10px 10px 0px;
+  margin: 10px 10px 0px 0px;
+}
+
+.channel-channel-title {
+  max-width: 335px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .channel-thumbnail {

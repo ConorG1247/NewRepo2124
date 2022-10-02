@@ -1,10 +1,32 @@
+import { Link } from "react-router-dom";
+
 function MainContent() {
+  const url = window.location.href.split("/directory/")[1];
+
   return (
     <div className="main-container">
       <div className="main-title">Browse</div>
       <div className="main-selection-container">
-        <div className="main-selection">Categories</div>
-        <div className="main-selection">Channels</div>
+        <Link to="/directory/categories">
+          <div
+            className={
+              url === "categories"
+                ? "main-selection-selected"
+                : "main-selection"
+            }
+          >
+            Categories
+          </div>
+        </Link>
+        <Link to="/directory/channels">
+          <div
+            className={
+              url === "channels" ? "main-selection-selected" : "main-selection"
+            }
+          >
+            Channels
+          </div>
+        </Link>
       </div>
     </div>
   );

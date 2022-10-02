@@ -23,10 +23,8 @@ function CategoryDisplay({
                 alt={game.name}
                 style={{ width: 187, height: 250 }}
               />
-              <div title={game.name}>
-                {game.name.length > 17
-                  ? game.name.slice(0, 17) + "..."
-                  : game.name}
+              <div className="category-game-title" title={game.name}>
+                {game.name}
               </div>
               <div onClick={() => blockCategory(game.name, game.id)}>
                 Hide Game

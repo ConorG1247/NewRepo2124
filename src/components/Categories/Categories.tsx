@@ -7,6 +7,7 @@ const blockList = [
   { name: "Grand Theft Auto V", id: "32982" },
   { name: "FIFA 23", id: "1745202732" },
   { name: "Slots", id: "498566" },
+  { name: "PUBG: BATTLEGROUNDS", id: "493057" },
 ];
 
 function Categories() {
@@ -138,12 +139,14 @@ function Categories() {
         pageNumber={pageNumber}
         blockCategory={blockCategory}
       />
-      <Pagination
-        paginationData={paginationData}
-        nextPage={nextGamePage}
-        prevPage={prevGamePage}
-        pageSelect={paginationPageSelect}
-      />
+      {blockedGameData && (
+        <Pagination
+          paginationData={paginationData}
+          nextPage={nextGamePage}
+          prevPage={prevGamePage}
+          pageSelect={paginationPageSelect}
+        />
+      )}
     </div>
   );
 }

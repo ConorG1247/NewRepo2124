@@ -13,7 +13,7 @@ const router = createBrowserRouter([
     errorElement: <Error />,
   },
   {
-    path: "directory/category",
+    path: "directory/categories",
     element: <CategoryDirectory />,
   },
   {
