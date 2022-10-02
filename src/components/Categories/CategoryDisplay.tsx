@@ -3,9 +3,11 @@ import { fullGameData } from "libs/types";
 function CategoryDisplay({
   gameData,
   pageNumber,
+  blockCategory,
 }: {
   gameData: fullGameData | undefined;
   pageNumber: { start: number; end: number };
+  blockCategory: (categoryId: string) => void;
 }) {
   return (
     <div
@@ -29,6 +31,7 @@ function CategoryDisplay({
                 style={{ width: 187, height: 250 }}
               />
               <div>{game.name}</div>
+              <div onClick={() => blockCategory(game.id)}>Hide Game</div>
             </div>
           );
         })}
