@@ -3,8 +3,15 @@ import { gameData, fullGameData, fullIndividualGameData } from "libs/types";
 import CategoryDisplay from "./CategoryDisplay";
 import Pagination from "components/Pagination/Pagination";
 
+const blockList = [
+  { name: "League of Legends", id: "21779" },
+  { name: "Just Chatting", id: "509658" },
+  { name: "Grand Theft Auto V", id: "32982" },
+];
+
 function Categories() {
   const [gameData, setGameData] = useState<fullGameData>();
+  const [blockedGameData, setBlockedGameData] = useState<fullGameData>();
   const [pageNumber, setPageNumber] = useState({ start: 0, end: 20 });
   const [paginationData, setPaginationData] = useState<
     {
@@ -39,6 +46,24 @@ function Categories() {
 
     getCategoryData();
   }, []);
+
+  useEffect(() => {
+    if (gameData) {
+      let updatedGameList: fullIndividualGameData[] = gameData.data;
+
+      if (blockList.length > 0) {
+        blockList.forEach((game) => {
+          updatedGameList = updatedGameList?.filter((category: any) => {
+            return game.id !== category.id;
+          });
+        });
+      }
+      setBlockedGameData({
+        data: [...updatedGameList],
+        pagination: gameData.pagination,
+      });
+    }
+  }, [gameData]);
 
   const nextGamePage = async () => {
     if (gameData && pageNumber.start + 20 >= gameData?.data?.length - 20) {
@@ -94,6 +119,9 @@ function Categories() {
   const blockCategory = (categoryId: string) => {
     if (gameData) {
       const updatedGameList = gameData?.data.filter((game) => {
+        if (game.id === categoryId) {
+          console.log(game);
+        }
         return game.id !== categoryId;
       });
 
@@ -104,7 +132,7 @@ function Categories() {
   return (
     <div>
       <CategoryDisplay
-        gameData={gameData}
+        gameData={blockedGameData}
         pageNumber={pageNumber}
         blockCategory={blockCategory}
       />
