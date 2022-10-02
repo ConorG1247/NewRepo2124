@@ -1,6 +1,7 @@
 import Header from "components/Header/Header";
 import Sidebar from "components/Sidebar/Sidebar";
 import MainContent from "components/MainContent";
+import Categories from "components/Categories/Categories";
 
 function CategoryDirectory() {
   return (
@@ -9,7 +10,7 @@ function CategoryDirectory() {
       <Sidebar />
       <div className="main-content-container">
         <MainContent />
-        <CategoryDirectory />
+        <Categories />
       </div>
     </div>
   );

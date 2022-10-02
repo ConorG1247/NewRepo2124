@@ -1,19 +1,19 @@
-import CategoryDirectory from "components/Directory/CategoryDirectory";
 import Header from "components/Header/Header";
-import MainContent from "components/MainContent";
 import Sidebar from "components/Sidebar/Sidebar";
-import "./App.css";
+import MainContent from "components/MainContent";
+import Channels from "components/Channels/Channels";
 
-function App() {
+function CategoryDirectory() {
   return (
     <div>
       <Header />
       <Sidebar />
       <div className="main-content-container">
         <MainContent />
+        <Channels />
       </div>
     </div>
   );
 }
 
-export default App;
+export default CategoryDirectory;
