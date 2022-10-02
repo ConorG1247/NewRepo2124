@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { fullChannelData } from "libs/types";
+import { fullChannelData, uptimeChannelData } from "libs/types";
 import CalculateUptime from "custom/CalculateUptime";
 
 function ChannelDisplay({
@@ -11,23 +11,33 @@ function ChannelDisplay({
   pageNumber: { start: number; end: number };
   blockChannel: (channelName: string, channelId: string) => void;
 }) {
-  const [liveDuration, setLiveDuration] = useState<string[]>([]);
+  const [updatedChannelData, setUpdatedChannelData] = useState<{
+    data: uptimeChannelData[];
+    pagation: { cursor: string };
+  }>();
 
   useEffect(() => {
+    let channelDataUptime: any = channelData;
+
     const getUptime = () => {
-      channelData?.data.forEach((channel) => {
+      channelData?.data.forEach((channel, index) => {
         const uptime = CalculateUptime(channel);
-        liveDuration.push(uptime);
+        channelDataUptime.data[index] = { ...channel, uptime: uptime };
       });
+
+      console.log(channelDataUptime);
+
+      setUpdatedChannelData(channelDataUptime);
     };
 
     getUptime();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [channelData]);
 
   return (
     <div className="channel-display-container">
-      {channelData?.data
+      {updatedChannelData?.data
         .slice(pageNumber.start, pageNumber.end)
         .map((channel, index) => {
           return (
@@ -49,7 +59,7 @@ function ChannelDisplay({
               <div className="channel-channel-title" title={channel.game_name}>
                 {channel.game_name}
               </div>
-              <div>{liveDuration[index]}</div>
+              <div>{channel.uptime}</div>
               <div
                 onClick={() =>
                   blockChannel(channel.user_login, channel.user_id)
