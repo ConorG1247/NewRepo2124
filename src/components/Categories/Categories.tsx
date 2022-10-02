@@ -4,9 +4,8 @@ import CategoryDisplay from "./CategoryDisplay";
 import Pagination from "components/Pagination/Pagination";
 
 const blockList = [
-  { name: "League of Legends", id: "21779" },
-  { name: "Just Chatting", id: "509658" },
   { name: "Grand Theft Auto V", id: "32982" },
+  { name: "FIFA 23", id: "1745202732" },
 ];
 
 function Categories() {
