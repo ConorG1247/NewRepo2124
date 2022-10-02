@@ -10,26 +10,33 @@ function ChannelDisplay({
   blockChannel: (channelName: string, channelId: string) => void;
 }) {
   return (
-    <div>
+    <div className="channel-display-container">
       {channelData?.data
         .slice(pageNumber.start, pageNumber.end)
         .map((channel, index) => {
           return (
-            <div key={index}>
-              <img
-                src={channel.thumbnail_url
-                  .replace("{width}", "440")
-                  .replace("{height}", "248")}
-                alt={channel.user_name}
-              />
-              <div>{channel.viewer_count.toLocaleString("en-US")}</div>
-              <div title={channel.title}>
-                {channel.title.length > 35
-                  ? channel.title.slice(0, 35) + "..."
-                  : channel.title}
-              </div>
+            <div className="channel-content-container" key={index}>
+              <a href={`https://www.twitch.tv/${channel.user_login}`}>
+                <img
+                  className="channel-thumbnail"
+                  src={channel.thumbnail_url
+                    .replace("{width}", "346")
+                    .replace("{height}", "195")}
+                  alt={channel.user_name}
+                />
+                <div>{channel.viewer_count.toLocaleString("en-US")}</div>
+                <div title={channel.title}>
+                  {channel.title.length > 25
+                    ? channel.title.slice(0, 25) + "..."
+                    : channel.title}
+                </div>
+              </a>
               <div>{channel.user_name}</div>
-              <div>{channel.game_name}</div>
+              <div title={channel.game_name}>
+                {channel.game_name.length > 32
+                  ? channel.game_name.slice(0, 32) + "..."
+                  : channel.game_name}
+              </div>
               <div
                 onClick={() =>
                   blockChannel(channel.user_login, channel.user_id)

@@ -3,6 +3,16 @@ html {
   color: white;
 }
 
+a:link {
+  text-decoration: none;
+}
+
+a,
+a:visited,
+a:hover,
+a:active {
+  color: inherit;
+}
 /* SCROLLBAR */
 
 body::-webkit-scrollbar {
@@ -116,4 +126,26 @@ body::-webkit-scrollbar-thumb {
   flex-direction: column;
   padding: 10px;
   margin: 10px 10px 10px 0px;
+}
+
+/* CHANNEL DISPLAY */
+
+.channel-display-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.channel-content-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin: 10px 10px 10px 0px;
+}
+
+.channel-thumbnail {
+  border-radius: 5px;
+}
+
+.channel-thumbnail {
+  border-radius: 5px;
 }

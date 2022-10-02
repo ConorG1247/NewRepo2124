@@ -72,7 +72,6 @@ function Channels() {
       if (blockList[0].games.length > 0) {
         blockList[0].games.forEach((blockedGames) => {
           updatedChannelData = updatedChannelData?.filter((game: any) => {
-            console.log(game);
             return blockedGames.id !== game.game_id;
           });
         });
