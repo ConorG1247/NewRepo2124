@@ -11,7 +11,7 @@ const blockList = [
 function Categories() {
   const [gameData, setGameData] = useState<fullGameData>();
   const [blockedGameData, setBlockedGameData] = useState<fullGameData>();
-  const [pageNumber, setPageNumber] = useState({ start: 0, end: 20 });
+  const [pageNumber, setPageNumber] = useState({ start: 0, end: 100 });
   const [paginationData, setPaginationData] = useState<
     {
       page: number;
@@ -65,7 +65,7 @@ function Categories() {
   }, [gameData]);
 
   const nextGamePage = async () => {
-    if (gameData && pageNumber.start + 20 >= gameData?.data?.length - 20) {
+    if (gameData && pageNumber.start + 100 >= gameData?.data?.length - 100) {
       const res = await fetch(
         `https://api.twitch.tv/helix/games/top?first=100&after=${gameData?.pagination.cursor}`,
         {
@@ -84,9 +84,9 @@ function Categories() {
         pagination: data.pagination,
       });
     }
-    setPageNumber({ start: pageNumber.start + 20, end: pageNumber.end + 20 });
+    setPageNumber({ start: pageNumber.start + 100, end: pageNumber.end + 100 });
     if (paginationData.length === 0) {
-      return setPaginationData([{ page: 1, start: 0, end: 20 }]);
+      return setPaginationData([{ page: 1, start: 0, end: 100 }]);
     }
     setPaginationData([
       ...paginationData,
@@ -99,7 +99,7 @@ function Categories() {
   };
 
   const prevGamePage = () => {
-    setPageNumber({ start: pageNumber.start - 20, end: pageNumber.end - 20 });
+    setPageNumber({ start: pageNumber.start - 100, end: pageNumber.end - 100 });
     setPaginationData([...paginationData.slice(0, paginationData.length - 1)]);
   };
 
@@ -111,7 +111,7 @@ function Categories() {
     setPageNumber({ start: page.start, end: page.end });
     setPaginationData([...paginationData.slice(0, page.page - 1)]);
     if (paginationData.length === 0) {
-      setPaginationData([{ page: 1, start: 0, end: 20 }]);
+      setPaginationData([{ page: 1, start: 0, end: 100 }]);
     }
   };
 
@@ -129,7 +129,7 @@ function Categories() {
   };
 
   return (
-    <div>
+    <div className="category-container">
       <CategoryDisplay
         gameData={blockedGameData}
         pageNumber={pageNumber}

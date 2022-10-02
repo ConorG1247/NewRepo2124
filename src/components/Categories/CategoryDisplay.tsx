@@ -10,19 +10,12 @@ function CategoryDisplay({
   blockCategory: (categoryId: string) => void;
 }) {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "space-between",
-        width: 700,
-      }}
-    >
+    <div className="category-display-container">
       {gameData?.data
         ?.slice(pageNumber.start, pageNumber.end)
         .map((game, index) => {
           return (
-            <div key={index}>
+            <div className="category-content-container" key={index}>
               <img
                 src={game.box_art_url
                   .replace("{width}", "285")
@@ -30,7 +23,11 @@ function CategoryDisplay({
                 alt={game.name}
                 style={{ width: 187, height: 250 }}
               />
-              <div>{game.name}</div>
+              <div title={game.name}>
+                {game.name.length > 17
+                  ? game.name.slice(0, 17) + "..."
+                  : game.name}
+              </div>
               <div onClick={() => blockCategory(game.id)}>Hide Game</div>
             </div>
           );

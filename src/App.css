@@ -59,3 +59,33 @@ body::-webkit-scrollbar-thumb {
   background-color: rgb(28, 28, 28);
   z-index: 9;
 }
+
+.category-container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* PAGE CONTENT */
+
+.main-content-container {
+  display: flex;
+  flex-direction: column;
+  padding: 115px 0px 0px 150px;
+}
+
+/* MAIN CONTENT */
+
+/* CATEGORY DISPLAY */
+
+.category-display-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.category-content-container {
+  display: flex;
+  padding: 10px;
+  margin: 10px 10px 10px 0px;
+  background-color: aqua;
+  flex-direction: column;
+}
