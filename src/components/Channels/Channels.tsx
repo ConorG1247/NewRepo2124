@@ -3,9 +3,26 @@ import { fullChannelData } from "libs/types";
 import Pagination from "components/Pagination/Pagination";
 import ChannelDisplay from "./ChannelDisplay";
 
+const blockList = [
+  {
+    games: [
+      { name: "Grand Theft Auto V", id: "32982" },
+      { name: "FIFA 23", id: "1745202732" },
+    ],
+  },
+  {
+    channels: [
+      { name: "castro_1021", id: 52091823 },
+      { name: "npmlol", id: 21841789 },
+    ],
+  },
+];
+
 function Channels() {
   const [channelData, setChannelData] = useState<fullChannelData>();
-  const [pageNumber, setPageNumber] = useState({ start: 0, end: 20 });
+  const [blockedChannelData, setBlockedChannelData] =
+    useState<fullChannelData>();
+  const [pageNumber, setPageNumber] = useState({ start: 0, end: 100 });
   const [paginationData, setPaginationData] = useState<
     {
       page: number;
@@ -38,10 +55,12 @@ function Channels() {
     getChannelData();
   }, []);
 
+  useEffect(() => {}, [channelData]);
+
   const nextChannelPage = async () => {
     if (
       channelData &&
-      pageNumber.start + 20 >= channelData?.data?.length - 20
+      pageNumber.start + 100 >= channelData?.data?.length - 100
     ) {
       const res = await fetch(
         `https://api.twitch.tv/helix/streams?first=100&language=en&after=${channelData.pagination.cursor}`,
@@ -61,9 +80,9 @@ function Channels() {
         pagination: data.pagination,
       });
     }
-    setPageNumber({ start: pageNumber.start + 20, end: pageNumber.end + 20 });
+    setPageNumber({ start: pageNumber.start + 100, end: pageNumber.end + 100 });
     if (paginationData.length === 0) {
-      return setPaginationData([{ page: 1, start: 0, end: 20 }]);
+      return setPaginationData([{ page: 1, start: 0, end: 100 }]);
     }
     setPaginationData([
       ...paginationData,
@@ -76,7 +95,7 @@ function Channels() {
   };
 
   const prevChannelPage = () => {
-    setPageNumber({ start: pageNumber.start - 20, end: pageNumber.end - 20 });
+    setPageNumber({ start: pageNumber.start - 100, end: pageNumber.end - 100 });
     setPaginationData([...paginationData.slice(0, paginationData.length - 1)]);
   };
 
@@ -88,7 +107,7 @@ function Channels() {
     setPageNumber({ start: page.start, end: page.end });
     setPaginationData([...paginationData.slice(0, page.page - 1)]);
     if (paginationData.length === 0) {
-      setPaginationData([{ page: 1, start: 0, end: 20 }]);
+      setPaginationData([{ page: 1, start: 0, end: 100 }]);
     }
   };
 

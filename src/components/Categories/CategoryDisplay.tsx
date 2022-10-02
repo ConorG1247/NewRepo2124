@@ -7,7 +7,7 @@ function CategoryDisplay({
 }: {
   gameData: fullGameData | undefined;
   pageNumber: { start: number; end: number };
-  blockCategory: (categoryId: string) => void;
+  blockCategory: (categoryName: string, categoryId: string) => void;
 }) {
   return (
     <div className="category-display-container">
@@ -28,7 +28,9 @@ function CategoryDisplay({
                   ? game.name.slice(0, 17) + "..."
                   : game.name}
               </div>
-              <div onClick={() => blockCategory(game.id)}>Hide Game</div>
+              <div onClick={() => blockCategory(game.name, game.id)}>
+                Hide Game
+              </div>
             </div>
           );
         })}

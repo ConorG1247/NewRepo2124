@@ -5,7 +5,7 @@ import App from "./App";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Error from "Error";
 import CategoryDirectory from "components/Directory/CategoryDirectory";
-
+import ChannelDirectory from "components/Directory/ChannelDirectory";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -15,6 +15,10 @@ const router = createBrowserRouter([
   {
     path: "directory/category",
     element: <CategoryDirectory />,
+  },
+  {
+    path: "directory/channels",
+    element: <ChannelDirectory />,
   },
 ]);
 

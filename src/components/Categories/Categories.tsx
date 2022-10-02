@@ -115,7 +115,7 @@ function Categories() {
     }
   };
 
-  const blockCategory = (categoryId: string) => {
+  const blockCategory = (categoryName: string, categoryId: string) => {
     if (gameData) {
       const updatedGameList = gameData?.data.filter((game) => {
         if (game.id === categoryId) {
@@ -123,6 +123,8 @@ function Categories() {
         }
         return game.id !== categoryId;
       });
+
+      console.log(categoryName);
 
       setGameData({ data: updatedGameList, pagination: gameData.pagination });
     }

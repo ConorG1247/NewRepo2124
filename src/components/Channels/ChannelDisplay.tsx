@@ -20,8 +20,14 @@ function ChannelDisplay({
                   .replace("{height}", "248")}
                 alt={channel.user_name}
               />
-              <div>{channel.user_name}</div>
               <div>{channel.viewer_count.toLocaleString("en-US")}</div>
+              <div title={channel.title}>
+                {channel.title.length > 35
+                  ? channel.title.slice(0, 35) + "..."
+                  : channel.title}
+              </div>
+              <div>{channel.user_name}</div>
+              <div>{channel.game_name}</div>
             </div>
           );
         })}
