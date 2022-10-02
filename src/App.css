@@ -1,0 +1,54 @@
+html {
+  background-color: rgb(22, 22, 22);
+  color: white;
+}
+
+/* SCROLLBAR */
+
+body::-webkit-scrollbar {
+  width: 12px;
+}
+
+body::-webkit-scrollbar-track {
+  background: rgb(40, 40, 40);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: var(--secondary-background-colour);
+  border-radius: 20px;
+  border: 3px solid rgb(64, 64, 64);
+  background-color: rgb(64, 64, 64);
+}
+
+/* HEADER */
+
+.header-container {
+  display: flex;
+}
+
+.header-content-container {
+  display: flex;
+  position: fixed;
+  justify-content: space-between;
+  width: 100vw;
+  padding: 30px 5px 30px 10px;
+  border-bottom: 1px solid rgb(95, 95, 95);
+  background-color: rgb(28, 28, 28);
+  z-index: 10;
+}
+
+.header-dashboard {
+  display: flex;
+  justify-content: center;
+  width: 10%;
+}
+
+.header-user {
+  display: flex;
+  justify-content: center;
+  width: 15%;
+}
+
+.test {
+  margin: 45px;
+}
