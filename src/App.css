@@ -24,10 +24,6 @@ body::-webkit-scrollbar-thumb {
 
 .header-container {
   display: flex;
-}
-
-.header-content-container {
-  display: flex;
   position: fixed;
   justify-content: space-between;
   width: 100vw;
@@ -49,6 +45,17 @@ body::-webkit-scrollbar-thumb {
   width: 15%;
 }
 
-.test {
-  margin: 45px;
+/* SIDEBAR */
+
+.sidebar-container {
+  display: flex;
+  position: fixed;
+  flex-direction: column;
+  align-items: center;
+  top: 0;
+  height: 100%;
+  padding: 100px 15px 30px 15px;
+  border-right: 1px solid rgb(95, 95, 95);
+  background-color: rgb(28, 28, 28);
+  z-index: 9;
 }

@@ -1,7 +1,7 @@
 function Sidebar() {
   return (
-    <div>
-      <div>Sidebar</div>
+    <div className="sidebar-container">
+      <div>Followers</div>
     </div>
   );
 }
