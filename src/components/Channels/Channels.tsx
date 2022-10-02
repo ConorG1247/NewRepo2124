@@ -1,19 +1,21 @@
 import { useState, useEffect } from "react";
-import { fullChannelData } from "libs/types";
+import { fullChannelData, individualChannelData } from "libs/types";
 import Pagination from "components/Pagination/Pagination";
 import ChannelDisplay from "./ChannelDisplay";
 
-const blockList = [
+const blockList: { [key: string]: { name: string; id: string }[] }[] = [
   {
     games: [
       { name: "Grand Theft Auto V", id: "32982" },
       { name: "FIFA 23", id: "1745202732" },
+      { name: "Slots", id: "498566" },
     ],
   },
   {
     channels: [
-      { name: "castro_1021", id: 52091823 },
-      { name: "npmlol", id: 21841789 },
+      { name: "castro_1021", id: "52091823" },
+      { name: "npmlol", id: "21841789" },
+      { name: "latinxingames", id: "412979783" },
     ],
   },
 ];
@@ -55,7 +57,33 @@ function Channels() {
     getChannelData();
   }, []);
 
-  useEffect(() => {}, [channelData]);
+  useEffect(() => {
+    if (channelData) {
+      let updatedChannelData: individualChannelData[] = channelData.data;
+
+      if (blockList[1]?.channels.length > 0) {
+        blockList[1].channels.forEach((blockedChannels) => {
+          updatedChannelData = updatedChannelData?.filter((channel: any) => {
+            return blockedChannels.id !== channel.user_id;
+          });
+        });
+      }
+
+      if (blockList[0].games.length > 0) {
+        blockList[0].games.forEach((blockedGames) => {
+          updatedChannelData = updatedChannelData?.filter((game: any) => {
+            console.log(game);
+            return blockedGames.id !== game.game_id;
+          });
+        });
+      }
+
+      setBlockedChannelData({
+        data: updatedChannelData,
+        pagination: channelData.pagination,
+      });
+    }
+  }, [channelData]);
 
   const nextChannelPage = async () => {
     if (
@@ -111,9 +139,31 @@ function Channels() {
     }
   };
 
+  const blockChannel = (channelName: string, channelId: string) => {
+    if (channelData) {
+      const updatedChannelList = channelData?.data.filter((channel) => {
+        if (channel.id === channelId) {
+          console.log(channel);
+        }
+        return channel.user_id !== channelId;
+      });
+
+      setChannelData({
+        data: updatedChannelList,
+        pagination: channelData.pagination,
+      });
+    }
+
+    console.log(channelName, channelId);
+  };
+
   return (
     <div>
-      <ChannelDisplay channelData={channelData} pageNumber={pageNumber} />
+      <ChannelDisplay
+        channelData={blockedChannelData}
+        pageNumber={pageNumber}
+        blockChannel={blockChannel}
+      />
       <Pagination
         paginationData={paginationData}
         nextPage={nextChannelPage}

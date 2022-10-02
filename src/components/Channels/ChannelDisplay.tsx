@@ -3,9 +3,11 @@ import { fullChannelData } from "libs/types";
 function ChannelDisplay({
   channelData,
   pageNumber,
+  blockChannel,
 }: {
   channelData: fullChannelData | undefined;
   pageNumber: { start: number; end: number };
+  blockChannel: (channelName: string, channelId: string) => void;
 }) {
   return (
     <div>
@@ -28,6 +30,13 @@ function ChannelDisplay({
               </div>
               <div>{channel.user_name}</div>
               <div>{channel.game_name}</div>
+              <div
+                onClick={() =>
+                  blockChannel(channel.user_login, channel.user_id)
+                }
+              >
+                Hide Channel
+              </div>
             </div>
           );
         })}

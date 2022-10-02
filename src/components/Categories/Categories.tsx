@@ -6,6 +6,7 @@ import Pagination from "components/Pagination/Pagination";
 const blockList = [
   { name: "Grand Theft Auto V", id: "32982" },
   { name: "FIFA 23", id: "1745202732" },
+  { name: "Slots", id: "498566" },
 ];
 
 function Categories() {
