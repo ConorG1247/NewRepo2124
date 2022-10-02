@@ -1,6 +1,38 @@
 import { individualChannelData } from "libs/types";
 
-const ConvertUptime = (channel: individualChannelData): string => {
+function getTimeInSeconds(str: string) {
+  let curr_time: any = [];
+
+  curr_time = str.split(":");
+  for (let i = 0; i < curr_time.length; i++) {
+    curr_time[i] = parseInt(curr_time[i]);
+  }
+
+  let t = curr_time[0] * 60 * 60 + curr_time[1] * 60 + curr_time[2];
+
+  return t;
+}
+
+// Function to convert seconds back to hh::mm:ss
+// format
+function convertSecToTime(t: any) {
+  let hours = Math.floor(t / 3600 - 1);
+  let hh = hours < 10 ? "0" + hours.toString() : hours.toString();
+  let min = Math.floor((t % 3600) / 60);
+  let mm = min < 10 ? "0" + min.toString() : min.toString();
+  //   let sec = (t % 3600) % 60;
+  //   let ss = sec < 10 ? "0" + sec.toString() : sec.toString();
+  //   let ans = hh + ":" + mm + ":" + ss;
+  let ans = hh + ":" + mm;
+  return ans;
+}
+
+// Function to find the time gap
+function CalculateUptime(channel: individualChannelData) {
+  const channelStartDate = Number(
+    channel.started_at.split("T")[0].replaceAll("-", "").slice(0, 6) +
+      channel.started_at.split("T")[0].replaceAll("-", "").slice(7)
+  );
   const today = new Date();
   const date =
     today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
@@ -19,41 +51,18 @@ const ConvertUptime = (channel: individualChannelData): string => {
       today.getHours() + ":" + today.getMinutes() + ":0" + today.getSeconds();
   }
 
-  const channelStartDate = Number(
-    channel.started_at.split("T")[0].replaceAll("-", "").slice(0, 6) +
-      channel.started_at.split("T")[0].replaceAll("-", "").slice(7)
-  );
+  const st = channel.started_at.split("T")[1].replace("Z", "");
+  const et = time;
 
-  const channelStartTime = channel.started_at.replace("Z", "").split("T")[1];
+  let t1 = getTimeInSeconds(st);
+  let t2 = getTimeInSeconds(et);
 
-  if (Number(date.replaceAll("-", "")) === channelStartDate) {
-    // console.log(Number(time.replace(":", "")));
+  let time_diff = t1 - t2 < 0 ? t2 - t1 : t1 - t2;
 
-    const uptime =
-      (Number(time.replaceAll(":", "")) -
-        Number(channelStartTime.replaceAll(":", ""))) /
-        1000 /
-        60 +
-      "";
-
-    let updatedUptime;
-    let finalTime;
-
-    if ((Number(uptime.split(".")[1].slice(0, 2)) + "").length === 1) {
-      updatedUptime = "0" + (Number(uptime.split(".")[1].slice(0, 2)) + "");
-    } else {
-      updatedUptime = Number(uptime.split(".")[1].slice(0, 2)) + "";
-    }
-
-    if (((Number(updatedUptime) / 100) * 60 + "").split(".")[0].length === 1) {
-      finalTime = "0" + (Number(updatedUptime) / 100) * 60 + "";
-    } else {
-      finalTime = (Number(updatedUptime) / 100) * 60 + "";
-    }
-
-    return uptime.split(".")[0] + ":" + finalTime.split(".")[0];
+  if (Number(date.replaceAll("-", "")) !== channelStartDate) {
+    return "24:00+";
   }
-  return "24:00+";
-};
+  return convertSecToTime(time_diff);
+}
 
-export default ConvertUptime;
+export default CalculateUptime;

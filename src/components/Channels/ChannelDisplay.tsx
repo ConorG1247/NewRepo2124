@@ -14,12 +14,14 @@ function ChannelDisplay({
   const [liveDuration, setLiveDuration] = useState<string[]>([]);
 
   useEffect(() => {
-    setLiveDuration([]);
+    const getUptime = () => {
+      channelData?.data.forEach((channel) => {
+        const uptime = CalculateUptime(channel);
+        liveDuration.push(uptime);
+      });
+    };
 
-    channelData?.data.forEach((channel) => {
-      liveDuration.push(CalculateUptime(channel));
-      console.log(CalculateUptime(channel));
-    });
+    getUptime();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [channelData]);
 
@@ -47,6 +49,7 @@ function ChannelDisplay({
               <div className="channel-channel-title" title={channel.game_name}>
                 {channel.game_name}
               </div>
+              <div>{liveDuration[index]}</div>
               <div
                 onClick={() =>
                   blockChannel(channel.user_login, channel.user_id)
