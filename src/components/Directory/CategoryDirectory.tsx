@@ -1,9 +1,16 @@
-import Categories from "components/Categories/Categories";
+import Header from "components/Header/Header";
+import Sidebar from "components/Sidebar/Sidebar";
+import MainContent from "components/MainContent";
 
 function CategoryDirectory() {
   return (
     <div>
-      <Categories />
+      <Header />
+      <Sidebar />
+      <div className="main-content-container">
+        <MainContent />
+        <CategoryDirectory />
+      </div>
     </div>
   );
 }

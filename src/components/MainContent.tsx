@@ -1,12 +1,10 @@
-import { useState } from "react";
-
 function MainContent() {
   return (
-    <div>
-      <div>Browse</div>
-      <div style={{ display: "flex" }}>
-        <div style={{ marginRight: 10 }}>Categories</div>
-        <div>Channels</div>
+    <div className="main-container">
+      <div className="main-title">Browse</div>
+      <div className="main-selection-container">
+        <div className="main-selection">Categories</div>
+        <div className="main-selection">Channels</div>
       </div>
     </div>
   );

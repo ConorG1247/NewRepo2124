@@ -70,10 +70,39 @@ body::-webkit-scrollbar-thumb {
 .main-content-container {
   display: flex;
   flex-direction: column;
-  padding: 115px 0px 0px 150px;
+  padding: 110px 0px 0px 145px;
 }
 
 /* MAIN CONTENT */
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  padding-left: 10px;
+}
+
+.main-title {
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin-bottom: 40px;
+}
+
+.main-selection-container {
+  display: flex;
+  justify-content: space-between;
+  width: 240px;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.main-selection {
+  border-bottom: 2px solid rgb(154, 242, 255, 0);
+}
+
+.main-selection-selected {
+  color: rgb(154, 242, 255);
+  border-bottom: 2px solid rgb(154, 242, 255, 1);
+}
 
 /* CATEGORY DISPLAY */
 
@@ -84,8 +113,7 @@ body::-webkit-scrollbar-thumb {
 
 .category-content-container {
   display: flex;
+  flex-direction: column;
   padding: 10px;
   margin: 10px 10px 10px 0px;
-  background-color: aqua;
-  flex-direction: column;
 }
