@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
-import { gameData, fullGameData, fullIndividualGameData } from "libs/types";
+import {
+  gameData,
+  fullGameData,
+  fullIndividualGameData,
+  fullBlockList,
+  blockListItem,
+} from "libs/types";
 import CategoryDisplay from "./CategoryDisplay";
 import Pagination from "components/Pagination/Pagination";
-
-const blockList = [
-  { name: "Grand Theft Auto V", id: "32982" },
-  { name: "FIFA 23", id: "1745202732" },
-  { name: "Slots", id: "498566" },
-  { name: "PUBG: BATTLEGROUNDS", id: "493057" },
-];
 
 function Categories() {
   const [gameData, setGameData] = useState<fullGameData>();
@@ -21,6 +20,24 @@ function Categories() {
       end: number;
     }[]
   >([]);
+  const [blockListData, setBlockListData] = useState<blockListItem[]>();
+
+  useEffect(() => {
+    const getBlockListData = async () => {
+      const res = await fetch("http://localhost:3001/get/all/guest", {
+        method: "GET",
+      });
+
+      const data: fullBlockList = await res.json();
+
+      if (!data.blocklist) {
+        return setBlockListData([]);
+      }
+
+      setBlockListData(data.blocklist.category);
+    };
+    getBlockListData();
+  }, []);
 
   useEffect(() => {
     const getCategoryData = async () => {
@@ -38,33 +55,39 @@ function Categories() {
 
       const data: gameData = await res.json();
 
-      data.data.forEach((game) => {
-        initialGameData.push({ ...game, viewers: 0 });
+      if (blockListData?.length === 0) {
+        return setGameData({ data: data.data, pagination: data.pagination });
+      }
+
+      blockListData?.forEach((blockedCategory) => {
+        initialGameData = data.data.filter((category) => {
+          return blockedCategory.id !== category.id;
+        });
       });
 
       setGameData({ data: initialGameData, pagination: data.pagination });
     };
 
     getCategoryData();
-  }, []);
+  }, [blockListData]);
 
   useEffect(() => {
     if (gameData) {
       let updatedGameList: fullIndividualGameData[] = gameData.data;
 
-      if (blockList.length > 0) {
-        blockList.forEach((game) => {
+      if (blockListData && blockListData.length > 0) {
+        blockListData.forEach((game) => {
           updatedGameList = updatedGameList?.filter((category: any) => {
             return game.id !== category.id;
           });
         });
       }
       setBlockedGameData({
-        data: [...updatedGameList],
+        data: updatedGameList,
         pagination: gameData.pagination,
       });
     }
-  }, [gameData]);
+  }, [blockListData, gameData]);
 
   const nextGamePage = async () => {
     if (gameData && pageNumber.start + 100 >= gameData?.data?.length - 100) {
@@ -117,19 +140,23 @@ function Categories() {
     }
   };
 
-  const blockCategory = (categoryName: string, categoryId: string) => {
-    if (gameData) {
-      const updatedGameList = gameData?.data.filter((game) => {
-        if (game.id === categoryId) {
-          console.log(game);
-        }
-        return game.id !== categoryId;
-      });
-
-      console.log(categoryName);
-
-      setGameData({ data: updatedGameList, pagination: gameData.pagination });
+  const blockCategory = async (categoryName: string, categoryId: string) => {
+    if (blockListData) {
+      setBlockListData([
+        ...blockListData,
+        { name: categoryName, id: categoryId, _id: "" },
+      ]);
     }
+
+    await fetch("http://localhost:3001/add/category", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user: "guest",
+        name: categoryName,
+        id: categoryId,
+      }),
+    });
   };
 
   return (

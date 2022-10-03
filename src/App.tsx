@@ -1,4 +1,3 @@
-import CategoryDirectory from "components/Directory/CategoryDirectory";
 import Header from "components/Header/Header";
 import MainContent from "components/MainContent";
 import Sidebar from "components/Sidebar/Sidebar";

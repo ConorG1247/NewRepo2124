@@ -28,9 +28,9 @@ function Categories() {
 
       const data: gameData = await res.json();
 
-      data.data.forEach((game) => {
-        gameData.push({ ...game, viewers: 0 });
-      });
+      // data.data.forEach((game) => {
+      //   gameData.push({ ...game, viewers: 0 });
+      // });
 
       setGameDataRaw({ data: gameData, pagination: data.pagination });
     };

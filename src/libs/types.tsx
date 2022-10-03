@@ -13,7 +13,6 @@ export type fullIndividualGameData = {
   id: string;
   name: string;
   box_art_url: string;
-  viewers: number;
 };
 
 export type fullGameData = {
@@ -59,4 +58,18 @@ export type uptimeChannelData = {
   user_name: string;
   viewer_count: number;
   uptime: string;
+};
+
+export type blockListItem = {
+  name: string;
+  id: string;
+  _id: string;
+};
+
+export type fullBlockList = {
+  user: string;
+  blocklist: {
+    category: blockListItem[];
+    channel: blockListItem[];
+  };
 };
