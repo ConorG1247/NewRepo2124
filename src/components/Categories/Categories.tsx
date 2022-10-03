@@ -41,7 +41,6 @@ function Categories() {
 
   useEffect(() => {
     const getCategoryData = async () => {
-      let initialGameData: fullIndividualGameData[] = [];
       const res = await fetch(
         "https://api.twitch.tv/helix/games/top?first=100",
         {
@@ -55,17 +54,7 @@ function Categories() {
 
       const data: gameData = await res.json();
 
-      if (blockListData?.length === 0) {
-        return setGameData({ data: data.data, pagination: data.pagination });
-      }
-
-      blockListData?.forEach((blockedCategory) => {
-        initialGameData = data.data.filter((category) => {
-          return blockedCategory.id !== category.id;
-        });
-      });
-
-      setGameData({ data: initialGameData, pagination: data.pagination });
+      setGameData({ data: data.data, pagination: data.pagination });
     };
 
     getCategoryData();
@@ -104,10 +93,12 @@ function Categories() {
 
       const data: fullGameData = await res.json();
 
-      setGameData({
-        data: [...gameData.data, ...data.data],
-        pagination: data.pagination,
-      });
+      if (blockedGameData) {
+        setGameData({
+          data: [...blockedGameData.data, ...data.data],
+          pagination: data.pagination,
+        });
+      }
     }
     setPageNumber({ start: pageNumber.start + 100, end: pageNumber.end + 100 });
     if (paginationData.length === 0) {
@@ -141,11 +132,19 @@ function Categories() {
   };
 
   const blockCategory = async (categoryName: string, categoryId: string) => {
-    if (blockListData) {
-      setBlockListData([
-        ...blockListData,
-        { name: categoryName, id: categoryId, _id: "" },
-      ]);
+    if (blockedGameData) {
+      let filteredCategories: fullIndividualGameData[] = [];
+
+      filteredCategories = blockedGameData?.data.filter((category) => {
+        return categoryId !== category.id;
+      });
+
+      console.log(filteredCategories);
+
+      setBlockedGameData({
+        data: filteredCategories,
+        pagination: blockedGameData.pagination,
+      });
     }
 
     await fetch("http://localhost:3001/add/category", {

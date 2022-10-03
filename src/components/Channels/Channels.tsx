@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { fullChannelData, individualChannelData } from "libs/types";
+import {
+  fullChannelData,
+  individualChannelData,
+  fullBlockList,
+  blockListItem,
+} from "libs/types";
 import Pagination from "components/Pagination/Pagination";
 import ChannelDisplay from "./ChannelDisplay";
 
@@ -34,6 +39,36 @@ function Channels() {
       end: number;
     }[]
   >([]);
+  const [blockListData, setBlockListData] = useState<{
+    blocklist: {
+      category: blockListItem[];
+      channel: blockListItem[];
+    };
+  }>();
+
+  useEffect(() => {
+    const getBlockListData = async () => {
+      const res = await fetch("http://localhost:3001/get/all/guest", {
+        method: "GET",
+      });
+
+      const data: fullBlockList = await res.json();
+
+      if (!data.blocklist) {
+        return setBlockListData(undefined);
+      }
+
+      setBlockListData({
+        blocklist: {
+          category: data.blocklist.category,
+          channel: data.blocklist.channel,
+        },
+      });
+    };
+    getBlockListData();
+  }, []);
+
+  console.log(blockListData);
 
   useEffect(() => {
     const getChannelData = async () => {
@@ -51,7 +86,7 @@ function Channels() {
       const data: fullChannelData = await res.json();
 
       setChannelData({
-        data: [...data.data],
+        data: data.data,
         pagination: data.pagination,
       });
     };
