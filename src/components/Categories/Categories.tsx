@@ -79,9 +79,12 @@ function Categories() {
   }, [blockListData, gameData]);
 
   const nextGamePage = async () => {
-    if (gameData && pageNumber.start + 100 >= gameData?.data?.length - 100) {
+    if (
+      blockedGameData &&
+      pageNumber.start + 100 >= blockedGameData?.data?.length - 100
+    ) {
       const res = await fetch(
-        `https://api.twitch.tv/helix/games/top?first=100&after=${gameData?.pagination.cursor}`,
+        `https://api.twitch.tv/helix/games/top?first=100&after=${blockedGameData?.pagination.cursor}`,
         {
           method: "GET",
           headers: {
@@ -138,8 +141,6 @@ function Categories() {
       filteredCategories = blockedGameData?.data.filter((category) => {
         return categoryId !== category.id;
       });
-
-      console.log(filteredCategories);
 
       setBlockedGameData({
         data: filteredCategories,

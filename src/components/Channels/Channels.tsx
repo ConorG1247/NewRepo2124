@@ -8,30 +8,11 @@ import {
 import Pagination from "components/Pagination/Pagination";
 import ChannelDisplay from "./ChannelDisplay";
 
-const blockList: { [key: string]: { name: string; id: string }[] }[] = [
-  {
-    games: [
-      { name: "Grand Theft Auto V", id: "32982" },
-      { name: "FIFA 23", id: "1745202732" },
-      { name: "Slots", id: "498566" },
-      { name: "PUBG: BATTLEGROUNDS", id: "493057" },
-    ],
-  },
-  {
-    channels: [
-      { name: "castro_1021", id: "52091823" },
-      { name: "npmlol", id: "21841789" },
-      { name: "latinxingames", id: "412979783" },
-      { name: "hasanabi", id: "207813352" },
-    ],
-  },
-];
-
 function Channels() {
   const [channelData, setChannelData] = useState<fullChannelData>();
   const [blockedChannelData, setBlockedChannelData] =
     useState<fullChannelData>();
-  const [pageNumber, setPageNumber] = useState({ start: 0, end: 100 });
+  const [pageNumber, setPageNumber] = useState({ start: 0, end: 60 });
   const [paginationData, setPaginationData] = useState<
     {
       page: number;
@@ -68,9 +49,11 @@ function Channels() {
     getBlockListData();
   }, []);
 
-  console.log(blockListData);
-
   useEffect(() => {
+    let updatedChannelData: fullChannelData = {
+      data: [],
+      pagination: { cursor: "" },
+    };
     const getChannelData = async () => {
       const res = await fetch(
         "https://api.twitch.tv/helix/streams?first=100&language=en",
@@ -85,33 +68,64 @@ function Channels() {
 
       const data: fullChannelData = await res.json();
 
-      setChannelData({
-        data: data.data,
+      updatedChannelData = {
+        data: [...updatedChannelData.data, ...data.data],
         pagination: data.pagination,
+      };
+
+      while (updatedChannelData.data.length < 300) {
+        const res = await fetch(
+          `https://api.twitch.tv/helix/streams?first=100&language=en&after=${updatedChannelData.pagination.cursor}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: "Bearer hjn4lfvaa9vd04rv4ttw3nlnifndi7",
+              "Client-Id": "hra765tyzo51u6ju9i7ihfmckwzuss",
+            },
+          }
+        );
+
+        const data: fullChannelData = await res.json();
+
+        updatedChannelData = {
+          data: [...updatedChannelData.data, ...data.data],
+          pagination: data.pagination,
+        };
+      }
+
+      setChannelData({
+        data: updatedChannelData.data,
+        pagination: updatedChannelData.pagination,
       });
     };
 
     getChannelData();
-  }, []);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [blockListData]);
 
   useEffect(() => {
     if (channelData) {
       let updatedChannelData: individualChannelData[] = channelData.data;
 
-      if (blockList[1]?.channels.length > 0) {
-        blockList[1].channels.forEach((blockedChannels) => {
+      if (blockListData && blockListData?.blocklist.channel.length > 0) {
+        blockListData?.blocklist.channel.forEach((blockedChannels) => {
           updatedChannelData = updatedChannelData?.filter((channel: any) => {
             return blockedChannels.id !== channel.user_id;
           });
         });
       }
 
-      if (blockList[0].games.length > 0) {
-        blockList[0].games.forEach((blockedGames) => {
+      if (blockListData && blockListData?.blocklist.category.length > 0) {
+        blockListData?.blocklist.category.forEach((blockedCategories) => {
           updatedChannelData = updatedChannelData?.filter((game: any) => {
-            return blockedGames.id !== game.game_id;
+            return blockedCategories.id !== game.game_id;
           });
         });
+      }
+
+      if (!blockListData) {
+        return setBlockedChannelData(channelData);
       }
 
       setBlockedChannelData({
@@ -119,13 +133,10 @@ function Channels() {
         pagination: channelData.pagination,
       });
     }
-  }, [channelData]);
+  }, [blockListData, channelData]);
 
   const nextChannelPage = async () => {
-    if (
-      channelData &&
-      pageNumber.start + 100 >= channelData?.data?.length - 100
-    ) {
+    if (blockedChannelData && channelData) {
       const res = await fetch(
         `https://api.twitch.tv/helix/streams?first=100&language=en&after=${channelData.pagination.cursor}`,
         {
@@ -140,13 +151,18 @@ function Channels() {
       const data: fullChannelData = await res.json();
 
       setChannelData({
-        data: [...channelData.data, ...data.data],
+        data: [...blockedChannelData.data, ...data.data],
         pagination: data.pagination,
       });
     }
-    setPageNumber({ start: pageNumber.start + 100, end: pageNumber.end + 100 });
+
+    setPageNumber({
+      start: pageNumber.start + 60,
+      end: pageNumber.end + 60,
+    });
+
     if (paginationData.length === 0) {
-      return setPaginationData([{ page: 1, start: 0, end: 100 }]);
+      return setPaginationData([{ page: 1, start: 0, end: 60 }]);
     }
     setPaginationData([
       ...paginationData,
@@ -159,7 +175,7 @@ function Channels() {
   };
 
   const prevChannelPage = () => {
-    setPageNumber({ start: pageNumber.start - 100, end: pageNumber.end - 100 });
+    setPageNumber({ start: pageNumber.start - 60, end: pageNumber.end - 60 });
     setPaginationData([...paginationData.slice(0, paginationData.length - 1)]);
   };
 
@@ -171,27 +187,37 @@ function Channels() {
     setPageNumber({ start: page.start, end: page.end });
     setPaginationData([...paginationData.slice(0, page.page - 1)]);
     if (paginationData.length === 0) {
-      setPaginationData([{ page: 1, start: 0, end: 100 }]);
+      setPaginationData([{ page: 1, start: 0, end: 60 }]);
     }
   };
 
-  const blockChannel = (channelName: string, channelId: string) => {
-    if (channelData) {
-      const updatedChannelList = channelData?.data.filter((channel) => {
-        if (channel.id === channelId) {
-          console.log(channel);
-        }
-        return channel.user_id !== channelId;
+  const blockChannel = async (channelName: string, channelId: string) => {
+    if (blockedChannelData) {
+      let filteredChannels: individualChannelData[] = [];
+
+      filteredChannels = blockedChannelData?.data.filter((channel) => {
+        console.log(channelId, channel.id);
+        return channelId !== channel.user_id;
       });
 
-      setChannelData({
-        data: updatedChannelList,
-        pagination: channelData.pagination,
+      setBlockedChannelData({
+        data: filteredChannels,
+        pagination: blockedChannelData.pagination,
       });
     }
 
-    console.log(channelName, channelId);
+    await fetch("http://localhost:3001/add/channel", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user: "guest",
+        name: channelName,
+        id: channelId,
+      }),
+    });
   };
+
+  console.log(blockedChannelData?.data.length);
 
   return (
     <div>
