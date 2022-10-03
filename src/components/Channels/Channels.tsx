@@ -17,6 +17,7 @@ const blockList: { [key: string]: { name: string; id: string }[] }[] = [
       { name: "castro_1021", id: "52091823" },
       { name: "npmlol", id: "21841789" },
       { name: "latinxingames", id: "412979783" },
+      { name: "hasanabi", id: "207813352" },
     ],
   },
 ];

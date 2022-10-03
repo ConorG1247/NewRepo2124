@@ -1,30 +1,30 @@
 import { individualChannelData } from "libs/types";
 
 function getTimeInSeconds(str: string) {
-  let curr_time: any = [];
+  let currentTime: any = [];
 
-  curr_time = str.split(":");
-  for (let i = 0; i < curr_time.length; i++) {
-    curr_time[i] = parseInt(curr_time[i]);
+  currentTime = str.split(":");
+  for (let i = 0; i < currentTime.length; i++) {
+    currentTime[i] = parseInt(currentTime[i]);
   }
 
-  let t = curr_time[0] * 60 * 60 + curr_time[1] * 60 + curr_time[2];
+  let time = currentTime[0] * 60 * 60 + currentTime[1] * 60 + currentTime[2];
 
-  return t;
+  return time;
 }
 
 // Function to convert seconds back to hh::mm:ss
 // format
-function convertSecToTime(t: any) {
-  let hours = Math.floor(t / 3600 - 1);
+function convertSecToTime(time: any) {
+  let hours = Math.floor(time / 3600 - 1);
   let hh = hours < 10 ? "0" + hours.toString() : hours.toString();
-  let min = Math.floor((t % 3600) / 60);
+  let min = Math.floor((time % 3600) / 60);
   let mm = min < 10 ? "0" + min.toString() : min.toString();
   //   let sec = (t % 3600) % 60;
   //   let ss = sec < 10 ? "0" + sec.toString() : sec.toString();
   //   let ans = hh + ":" + mm + ":" + ss;
-  let ans = hh + ":" + mm;
-  return ans;
+  let finalTime = hh + ":" + mm;
+  return finalTime;
 }
 
 // Function to find the time gap
@@ -51,13 +51,13 @@ function CalculateUptime(channel: individualChannelData) {
       today.getHours() + ":" + today.getMinutes() + ":0" + today.getSeconds();
   }
 
-  let st = channel.started_at.split("T")[1].replace("Z", "");
-  let et = time;
+  let startTime = channel.started_at.split("T")[1].replace("Z", "");
+  let endTime = time;
 
   if (Number(date.replaceAll("-", "")) !== channelStartDate) {
     const dateDifference = Number(date.replaceAll("-", "")) - channelStartDate;
 
-    et =
+    endTime =
       today.getHours() +
       24 * dateDifference +
       ":" +
@@ -66,12 +66,15 @@ function CalculateUptime(channel: individualChannelData) {
       today.getSeconds();
   }
 
-  let t1 = getTimeInSeconds(st);
-  let t2 = getTimeInSeconds(et);
+  let finalStartTime = getTimeInSeconds(startTime);
+  let finalEndTime = getTimeInSeconds(endTime);
 
-  let time_diff = t1 - t2 < 0 ? t2 - t1 : t1 - t2;
+  let timeDifference =
+    finalStartTime - finalEndTime < 0
+      ? finalEndTime - finalStartTime
+      : finalStartTime - finalEndTime;
 
-  return convertSecToTime(time_diff);
+  return convertSecToTime(timeDifference);
 }
 
 export default CalculateUptime;
