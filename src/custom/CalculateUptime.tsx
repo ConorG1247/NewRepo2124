@@ -51,17 +51,26 @@ function CalculateUptime(channel: individualChannelData) {
       today.getHours() + ":" + today.getMinutes() + ":0" + today.getSeconds();
   }
 
-  const st = channel.started_at.split("T")[1].replace("Z", "");
-  const et = time;
+  let st = channel.started_at.split("T")[1].replace("Z", "");
+  let et = time;
+
+  if (Number(date.replaceAll("-", "")) !== channelStartDate) {
+    const dateDifference = Number(date.replaceAll("-", "")) - channelStartDate;
+
+    et =
+      today.getHours() +
+      24 * dateDifference +
+      ":" +
+      today.getMinutes() +
+      ":" +
+      today.getSeconds();
+  }
 
   let t1 = getTimeInSeconds(st);
   let t2 = getTimeInSeconds(et);
 
   let time_diff = t1 - t2 < 0 ? t2 - t1 : t1 - t2;
 
-  if (Number(date.replaceAll("-", "")) !== channelStartDate) {
-    return "24:00+";
-  }
   return convertSecToTime(time_diff);
 }
 

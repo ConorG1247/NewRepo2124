@@ -25,8 +25,6 @@ function ChannelDisplay({
         channelDataUptime.data[index] = { ...channel, uptime: uptime };
       });
 
-      console.log(channelDataUptime);
-
       setUpdatedChannelData(channelDataUptime);
     };
 
