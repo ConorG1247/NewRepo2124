@@ -232,6 +232,7 @@ a:active {
   background-color: rgb(40, 40, 40);
   border-radius: 5px;
   margin-bottom: 10px;
+  transition-delay: 1s;
 }
 
 .channel-thumbnail {
@@ -242,21 +243,25 @@ a:active {
   transition: 200ms ease;
 }
 
+.channel-thumbnail-container:hover {
+  background-color: rgb(50, 213, 238);
+  transition-delay: 0s;
+}
+
 .channel-thumbnail-container {
   position: relative;
   display: inline-block;
   border-radius: 5px;
-  background-color: rgb(50, 213, 238);
 }
 
 .channel-thumbnail-container:before,
 .channel-thumbnail-container:after {
-  content: "";
   display: block;
-  background-color: rgb(50, 213, 238);
+  position: absolute;
+  content: "";
   width: 8px;
   height: 8px;
-  position: absolute;
+  background-color: rgb(50, 213, 238);
   transition: all 0.15s ease;
 }
 
