@@ -1,6 +1,7 @@
 html {
   background-color: rgb(22, 22, 22);
   color: white;
+  overflow: hidden;
 }
 
 a:link {
@@ -15,15 +16,15 @@ a:active {
 }
 /* SCROLLBAR */
 
-body::-webkit-scrollbar {
+.main-content-container::-webkit-scrollbar {
   width: 12px;
 }
 
-body::-webkit-scrollbar-track {
+.main-content-container::-webkit-scrollbar-track {
   background: rgb(40, 40, 40);
 }
 
-body::-webkit-scrollbar-thumb {
+.main-content-container::-webkit-scrollbar-thumb {
   background-color: var(--secondary-background-colour);
   border-radius: 20px;
   border: 3px solid rgb(64, 64, 64);
@@ -34,10 +35,11 @@ body::-webkit-scrollbar-thumb {
 
 .header-container {
   display: flex;
-  position: fixed;
+  position: sticky;
   justify-content: space-between;
-  width: 100vw;
-  padding: 30px 5px 30px 10px;
+  top: 0;
+  width: 100%;
+  padding: 30px 0px 30px 0px;
   border-bottom: 1px solid rgb(95, 95, 95);
   background-color: rgb(28, 28, 28);
   z-index: 10;
@@ -67,7 +69,7 @@ body::-webkit-scrollbar-thumb {
   padding: 100px 15px 30px 15px;
   border-right: 1px solid rgb(95, 95, 95);
   background-color: rgb(28, 28, 28);
-  z-index: 9;
+  z-index: 8;
 }
 
 .category-container {
@@ -79,8 +81,12 @@ body::-webkit-scrollbar-thumb {
 
 .main-content-container {
   display: flex;
+  position: relative;
   flex-direction: column;
-  padding: 110px 0px 0px 145px;
+  overflow: auto;
+  height: 90vh;
+  padding: 20px 0px 23px 125px;
+  min-width: 450px;
 }
 
 /* MAIN CONTENT */
@@ -102,7 +108,7 @@ body::-webkit-scrollbar-thumb {
   justify-content: space-between;
   width: 240px;
   font-size: 1.1rem;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .main-selection {
@@ -164,4 +170,14 @@ body::-webkit-scrollbar-thumb {
 
 .channel-thumbnail {
   border-radius: 5px;
+}
+
+@media (max-width: 40em) {
+  .sidebar-container {
+    display: none;
+  }
+  .main-content-container {
+    background-color: aquamarine;
+    padding: 20px 0px 23px 0px;
+  }
 }
