@@ -78,13 +78,15 @@ function ChannelDisplay({
               <div className="channel-channel-title" title={channel.game_name}>
                 {channel.game_name}
               </div>
-              {channel.tags.map((tag, index) => {
-                return (
-                  <div key={index}>
-                    <div>{tag}</div>
-                  </div>
-                );
-              })}
+              <div className="channel-tags-container">
+                {channel.tags.map((tag, index) => {
+                  return (
+                    <div key={index} className="channel-tags-content">
+                      {tag}
+                    </div>
+                  );
+                })}
+              </div>
               <div>{channel.uptime}</div>
               <div
                 onClick={() =>
