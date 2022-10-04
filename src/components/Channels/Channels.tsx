@@ -118,8 +118,6 @@ function Channels() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blockListData]);
 
-  console.log(channelData);
-
   useEffect(() => {
     if (channelData) {
       let updatedChannelData: individualChannelData[] = channelData.data;
@@ -137,7 +135,7 @@ function Channels() {
 
       if (blockListData && blockListData?.blocklist.channel.length > 0) {
         blockListData?.blocklist.channel.forEach((blockedChannels) => {
-          updatedChannelData = updatedChannelData?.filter((channel: any) => {
+          channelDataTags.data = channelDataTags.data.filter((channel: any) => {
             return blockedChannels.id !== channel.user_id;
           });
         });
@@ -145,7 +143,7 @@ function Channels() {
 
       if (blockListData && blockListData?.blocklist.category.length > 0) {
         blockListData?.blocklist.category.forEach((blockedCategories) => {
-          updatedChannelData = updatedChannelData?.filter((game: any) => {
+          channelDataTags.data = channelDataTags.data.filter((game: any) => {
             return blockedCategories.id !== game.game_id;
           });
         });

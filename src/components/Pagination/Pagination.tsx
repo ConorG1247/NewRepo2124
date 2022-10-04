@@ -1,3 +1,5 @@
+import { useRef } from "react";
+
 function Pagination({
   paginationData,
   nextPage,
@@ -13,6 +15,8 @@ function Pagination({
   prevPage: () => void;
   pageSelect: (page: { page: number; start: number; end: number }) => void;
 }) {
+  const ref: any = useRef(null);
+
   return (
     <div>
       {paginationData.length > 0 && (
@@ -43,7 +47,7 @@ function Pagination({
       <button
         onClick={() => {
           nextPage();
-          window.scrollTo(0, 0);
+          ref.current?.scrollIntoView({ behavior: "smooth" });
         }}
       >
         Next page
