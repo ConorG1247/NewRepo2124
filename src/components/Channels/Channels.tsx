@@ -107,19 +107,6 @@ function Channels() {
         };
       });
 
-      StreamTags.forEach((streamTag) => {
-        channelDataTags.data.forEach((channel: any, index: number) => {
-          channel?.tag_ids?.forEach((tag: string) => {
-            if (streamTag.tag_id === tag) {
-              channelDataTags.data[index] = {
-                ...channelDataTags.data[index],
-                tags: [...channelDataTags.data[index].tags, streamTag.tag],
-              };
-            }
-          });
-        });
-      });
-
       setChannelData({
         data: channelDataTags.data,
         pagination: channelDataTags.pagination,
@@ -131,9 +118,22 @@ function Channels() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blockListData]);
 
+  console.log(channelData);
+
   useEffect(() => {
     if (channelData) {
       let updatedChannelData: individualChannelData[] = channelData.data;
+      let channelDataTags: any = {
+        data: [],
+        pagination: { cursor: "" },
+      };
+
+      updatedChannelData.forEach((channel) => {
+        channelDataTags = {
+          data: [...channelDataTags.data, { ...channel, tags: [] }],
+          pagination: channelData.pagination,
+        };
+      });
 
       if (blockListData && blockListData?.blocklist.channel.length > 0) {
         blockListData?.blocklist.channel.forEach((blockedChannels) => {
@@ -151,12 +151,28 @@ function Channels() {
         });
       }
 
+      StreamTags.forEach((streamTag) => {
+        channelDataTags.data.forEach((channel: any, index: number) => {
+          channel?.tag_ids?.forEach((tag: string) => {
+            if (streamTag.tag_id === tag) {
+              channelDataTags.data[index] = {
+                ...channelDataTags.data[index],
+                tags: [...channelDataTags.data[index].tags, streamTag.tag],
+              };
+            }
+          });
+        });
+      });
+
       if (!blockListData) {
-        return setBlockedChannelData(channelData);
+        return setBlockedChannelData({
+          data: updatedChannelData,
+          pagination: channelData.pagination,
+        });
       }
 
       setBlockedChannelData({
-        data: updatedChannelData,
+        data: channelDataTags.data,
         pagination: channelData.pagination,
       });
     }

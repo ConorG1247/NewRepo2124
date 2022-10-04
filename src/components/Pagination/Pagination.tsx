@@ -15,14 +15,16 @@ function Pagination({
 }) {
   return (
     <div>
-      <button
-        onClick={() => {
-          nextPage();
-          window.scrollTo(0, 0);
-        }}
-      >
-        Next page
-      </button>
+      {paginationData.length > 0 && (
+        <button
+          onClick={() => {
+            prevPage();
+            window.scrollTo(0, 0);
+          }}
+        >
+          Prev page
+        </button>
+      )}
       {paginationData.length > 0 &&
         paginationData.map((page, index) => {
           return (
@@ -38,16 +40,14 @@ function Pagination({
             </div>
           );
         })}
-      {paginationData.length > 0 && (
-        <button
-          onClick={() => {
-            prevPage();
-            window.scrollTo(0, 0);
-          }}
-        >
-          Prev page
-        </button>
-      )}
+      <button
+        onClick={() => {
+          nextPage();
+          window.scrollTo(0, 0);
+        }}
+      >
+        Next page
+      </button>
     </div>
   );
 }

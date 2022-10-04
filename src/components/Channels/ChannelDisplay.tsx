@@ -51,8 +51,11 @@ function ChannelDisplay({
                 />
                 <div>
                   {channel.viewer_count > 1000
-                    ? AbbreviateNumbers(channel.viewer_count, 1)
-                    : channel.viewer_count}
+                    ? channel.viewer_count > 100000
+                      ? AbbreviateNumbers(channel.viewer_count, 0)
+                      : AbbreviateNumbers(channel.viewer_count, 1)
+                    : channel.viewer_count}{" "}
+                  viewers
                 </div>
                 <div className="channel-channel-title" title={channel.title}>
                   {channel.title}
