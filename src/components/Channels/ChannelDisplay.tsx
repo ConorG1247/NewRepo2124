@@ -61,14 +61,22 @@ function ChannelDisplay({
                       .replace("{height}", "316")}
                     alt={channel.user_name}
                   />
-                </div>
-                <div>
-                  {channel.viewer_count > 1000
-                    ? channel.viewer_count > 100000
-                      ? AbbreviateNumbers(channel.viewer_count, 0)
-                      : AbbreviateNumbers(channel.viewer_count, 1)
-                    : channel.viewer_count}{" "}
-                  viewers
+                  <div className=" channel-viewers">
+                    {channel.viewer_count > 1000
+                      ? channel.viewer_count > 100000
+                        ? AbbreviateNumbers(channel.viewer_count, 0)
+                        : AbbreviateNumbers(channel.viewer_count, 1)
+                      : channel.viewer_count}{" "}
+                    viewers
+                  </div>
+                  <div
+                    className="channel-block"
+                    onClick={() =>
+                      blockChannel(channel.user_login, channel.user_id)
+                    }
+                  >
+                    x
+                  </div>
                 </div>
                 <div className="channel-channel-title" title={channel.title}>
                   {channel.title}
@@ -88,13 +96,6 @@ function ChannelDisplay({
                 })}
               </div>
               <div>{channel.uptime}</div>
-              <div
-                onClick={() =>
-                  blockChannel(channel.user_login, channel.user_id)
-                }
-              >
-                Hide Channel
-              </div>
             </div>
           );
         })}

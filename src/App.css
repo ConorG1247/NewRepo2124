@@ -237,6 +237,7 @@ a:active {
 .channel-content-container {
   display: flex;
   flex-direction: column;
+  position: relative;
   padding: 10px;
   margin: 10px 10px 0px 0px;
 }
@@ -267,7 +268,7 @@ a:active {
   border-radius: 5px;
   transform: translate(0, 0);
   transition: all 0.15s ease;
-  z-index: 10;
+  z-index: 7;
 }
 
 .channel-thumbnail-container:hover {
@@ -306,6 +307,14 @@ a:active {
   transform: translate(9px, -9px);
 }
 
+.channel-thumbnail-container:hover .channel-block {
+  transform: translate(9px, -9px);
+}
+
+.channel-thumbnail-container:hover .channel-viewers {
+  transform: translate(9px, -9px);
+}
+
 .channel-thumbnail-container:hover:before {
   transform: rotate(-45deg) scale(1);
 }
@@ -333,9 +342,44 @@ a:active {
 .channel-loading-user {
   width: 50%;
   height: 25px;
-  background-color: rgb(40, 40, 40);
   border-radius: 5px;
+  background-color: rgb(40, 40, 40);
   margin-bottom: 10px;
+}
+
+.channel-viewers {
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  top: 86%;
+  left: 2%;
+  padding: 0px 10px 3px 10px;
+  border-radius: 5px;
+  font-size: 1.1em;
+  background-color: rgba(20, 20, 20, 0.65);
+  transition: 150ms;
+  z-index: 8;
+}
+
+.channel-block {
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  top: 3.7%;
+  right: 2.5%;
+  padding: 0px 4px 5px 4px;
+  width: 25px;
+  border-radius: 50%;
+  background-color: rgb(40, 40, 40, 0.75);
+  transition: 150ms;
+  z-index: 8;
+}
+
+.channel-block:hover {
+  background-color: rgb(50, 213, 238, 1);
 }
 
 /* CHANNEL TAGS */
@@ -394,6 +438,9 @@ a:active {
   .channel-tags-container {
     max-width: 500px;
   }
+  .channel-viewers {
+    top: 85.5%;
+  }
 }
 
 @media (max-width: 110em) {
@@ -414,6 +461,9 @@ a:active {
   }
   .channel-tags-container {
     max-width: 450px;
+  }
+  .channel-viewers {
+    top: 83.5%;
   }
 }
 
@@ -450,6 +500,9 @@ a:active {
   .channel-tags-container {
     max-width: 400px;
   }
+  .channel-viewers {
+    top: 82%;
+  }
 }
 
 @media (max-width: 90em) {
@@ -470,6 +523,9 @@ a:active {
   }
   .channel-tags-container {
     max-width: 346px;
+  }
+  .channel-viewers {
+    top: 79.5%;
   }
 }
 
