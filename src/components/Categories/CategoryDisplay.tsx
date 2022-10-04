@@ -17,11 +17,11 @@ function CategoryDisplay({
           return (
             <div className="category-content-container" key={index}>
               <img
+                className="category-thumbnail"
                 src={game.box_art_url
                   .replace("{width}", "285")
                   .replace("{height}", "380")}
                 alt={game.name}
-                style={{ width: 187, height: 250 }}
               />
               <div className="category-game-title" title={game.name}>
                 {game.name}

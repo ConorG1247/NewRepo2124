@@ -24,7 +24,7 @@ function MainContent() {
               url === "channels" ? "main-selection-selected" : "main-selection"
             }
           >
-            Channels
+            Live Channels
           </div>
         </Link>
       </div>

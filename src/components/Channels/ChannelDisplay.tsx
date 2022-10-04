@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { fullChannelData, uptimeChannelData } from "libs/types";
 import CalculateUptime from "custom/CalculateUptime";
+import { AbbreviateNumbers } from "custom/AbbreviateNumbers";
 
 function ChannelDisplay({
   channelData,
@@ -48,7 +49,11 @@ function ChannelDisplay({
                     .replace("{height}", "195")}
                   alt={channel.user_name}
                 />
-                <div>{channel.viewer_count.toLocaleString("en-US")}</div>
+                <div>
+                  {channel.viewer_count > 1000
+                    ? AbbreviateNumbers(channel.viewer_count, 1)
+                    : channel.viewer_count}
+                </div>
                 <div className="channel-channel-title" title={channel.title}>
                   {channel.title}
                 </div>

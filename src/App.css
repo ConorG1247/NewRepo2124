@@ -48,13 +48,16 @@ a:active {
 .header-dashboard {
   display: flex;
   justify-content: center;
-  width: 10%;
+  padding-left: 10px;
+}
+
+.header-search {
 }
 
 .header-user {
   display: flex;
   justify-content: center;
-  width: 15%;
+  padding-right: 10px;
 }
 
 /* SIDEBAR */
@@ -86,7 +89,6 @@ a:active {
   overflow: auto;
   height: 90vh;
   padding: 20px 0px 23px 125px;
-  min-width: 450px;
 }
 
 /* MAIN CONTENT */
@@ -98,7 +100,7 @@ a:active {
 }
 
 .main-title {
-  font-size: 2.2rem;
+  font-size: 3rem;
   font-weight: bold;
   margin-bottom: 20px;
 }
@@ -106,8 +108,8 @@ a:active {
 .main-selection-container {
   display: flex;
   justify-content: space-between;
-  width: 240px;
-  font-size: 1.1rem;
+  width: 315px;
+  font-size: 1.3rem;
   margin-bottom: 20px;
 }
 
@@ -136,8 +138,13 @@ a:active {
   margin: 10px 10px 10px 0px;
 }
 
+.category-thumbnail {
+  width: 280px;
+  border-radius: 5px;
+}
+
 .category-game-title {
-  max-width: 187px;
+  max-width: 280px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -177,7 +184,29 @@ a:active {
     display: none;
   }
   .main-content-container {
-    background-color: aquamarine;
     padding: 20px 0px 23px 0px;
+  }
+  .main-title {
+    margin-bottom: 10px;
+  }
+  .main-selection-container {
+    margin-bottom: 10px;
+    padding-left: 5px;
+  }
+  .category-display-container {
+    padding-left: 5px;
+  }
+
+  .channel-display-container {
+    padding-left: 5px;
+  }
+  .category-thumbnail {
+    width: 150px;
+  }
+  .category-game-title {
+    max-width: 150px;
+  }
+  .header-search {
+    width: 50%;
   }
 }

@@ -2,7 +2,7 @@ function Header() {
   return (
     <div className="header-container">
       <div className="header-dashboard">Dashboard</div>
-      <input placeholder="Search" />
+      <input className="header-search" placeholder="Search" />
       <div className="header-user">User</div>
     </div>
   );
