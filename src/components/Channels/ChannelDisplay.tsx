@@ -40,7 +40,7 @@ function ChannelDisplay({
         Array.from(Array(100).keys()).map((item, index) => {
           return (
             <div key={index} className="channel-content-container">
-              <div className="channel-thumbnail" />
+              <div className="channel-loading-thumbnail" />
               <div className="channel-loading-title" />
               <div className="channel-loading-user" />
               <div className="channel-loading-user" />
@@ -53,8 +53,9 @@ function ChannelDisplay({
           return (
             <div className="channel-content-container" key={index}>
               <a href={`https://www.twitch.tv/${channel.user_login}`}>
-                <div className="channel-thumbnail">
+                <div className="channel-thumbnail-container">
                   <img
+                    className="channel-thumbnail"
                     src={channel.thumbnail_url
                       .replace("{width}", "346")
                       .replace("{height}", "195")}
