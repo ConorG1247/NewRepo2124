@@ -7,6 +7,7 @@ import {
 } from "libs/types";
 import Pagination from "components/Pagination/Pagination";
 import ChannelDisplay from "./ChannelDisplay";
+import { StreamTags } from "libs/StreamTags";
 
 function Channels() {
   const [channelData, setChannelData] = useState<fullChannelData>();
@@ -54,6 +55,12 @@ function Channels() {
       data: [],
       pagination: { cursor: "" },
     };
+
+    let channelDataTags: any = {
+      data: [],
+      pagination: { cursor: "" },
+    };
+
     const getChannelData = async () => {
       const res = await fetch(
         "https://api.twitch.tv/helix/streams?first=100&language=en",
@@ -92,6 +99,28 @@ function Channels() {
           pagination: data.pagination,
         };
       }
+
+      updatedChannelData.data.forEach((channel) => {
+        channelDataTags = {
+          data: [...channelDataTags.data, { ...channel, tags: [] }],
+          pagination: data.pagination,
+        };
+      });
+
+      StreamTags.forEach((streamTag) => {
+        channelDataTags.data.forEach((channel: any, index: number) => {
+          channel.tag_ids.forEach((tag: string) => {
+            if (streamTag.tag_id === tag) {
+              channelDataTags.data[index] = {
+                ...channelDataTags.data[index],
+                tags: [...channelDataTags.data[index].tags, streamTag.tag],
+              };
+            }
+          });
+        });
+      });
+
+      console.log(channelDataTags);
 
       setChannelData({
         data: updatedChannelData.data,
