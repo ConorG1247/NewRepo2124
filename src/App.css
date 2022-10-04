@@ -142,8 +142,11 @@ a:active {
   display: inline-block;
   position: relative;
   cursor: pointer;
+  width: 310px;
+  height: 413px;
   border-radius: 6px;
-  transition-delay: 100ms;
+  background-color: rgb(40, 40, 40);
+  transition-delay: 50ms;
 }
 
 .category-thumbnail-container:hover {
@@ -392,6 +395,10 @@ a:active {
 }
 
 @media (max-width: 100em) {
+  .category-thumbnail-container {
+    width: 280px;
+    height: 373px;
+  }
   .category-thumbnail {
     width: 280px;
   }
@@ -438,6 +445,10 @@ a:active {
 }
 
 @media (max-width: 60em) {
+  .category-thumbnail-container {
+    width: 220px;
+    height: 295px;
+  }
   .category-thumbnail {
     width: 220px;
   }
@@ -492,6 +503,10 @@ a:active {
   .category-thumbnail-container:after {
     width: 10px;
     height: 10px;
+  }
+  .category-thumbnail-container {
+    width: 150px;
+    height: 200px;
   }
   .category-thumbnail {
     width: 150px;
