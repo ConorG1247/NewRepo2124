@@ -58,6 +58,7 @@ export type uptimeChannelData = {
   user_name: string;
   viewer_count: number;
   uptime: string;
+  tags: string[];
 };
 
 export type blockListItem = {

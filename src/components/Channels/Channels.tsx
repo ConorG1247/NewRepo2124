@@ -109,7 +109,7 @@ function Channels() {
 
       StreamTags.forEach((streamTag) => {
         channelDataTags.data.forEach((channel: any, index: number) => {
-          channel.tag_ids.forEach((tag: string) => {
+          channel?.tag_ids?.forEach((tag: string) => {
             if (streamTag.tag_id === tag) {
               channelDataTags.data[index] = {
                 ...channelDataTags.data[index],
@@ -120,11 +120,9 @@ function Channels() {
         });
       });
 
-      console.log(channelDataTags);
-
       setChannelData({
-        data: updatedChannelData.data,
-        pagination: updatedChannelData.pagination,
+        data: channelDataTags.data,
+        pagination: channelDataTags.pagination,
       });
     };
 
@@ -245,8 +243,6 @@ function Channels() {
       }),
     });
   };
-
-  console.log(blockedChannelData?.data.length);
 
   return (
     <div>
