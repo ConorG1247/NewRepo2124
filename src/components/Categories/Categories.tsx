@@ -162,7 +162,7 @@ function Categories() {
   return (
     <div className="category-container">
       <CategoryDisplay
-        gameData={blockedGameData}
+        categoryData={blockedGameData}
         pageNumber={pageNumber}
         blockCategory={blockCategory}
       />

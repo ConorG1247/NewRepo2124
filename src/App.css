@@ -88,7 +88,7 @@ a:active {
   flex-direction: column;
   overflow: auto;
   height: 90vh;
-  padding: 20px 0px 23px 125px;
+  padding: 20px 0px 23px 140px;
 }
 
 /* MAIN CONTENT */
@@ -138,17 +138,18 @@ a:active {
   margin: 10px 10px 10px 0px;
 }
 
-.category-thumbnail {
-  width: 280px;
-  border-radius: 5px;
-}
-
 .category-thumbnail-container {
   display: inline-block;
   position: relative;
   cursor: pointer;
+  border-radius: 6px;
+  transition-delay: 1s;
+}
+
+.category-thumbnail-container:hover {
   border-radius: 5px;
   background-color: rgb(50, 213, 238);
+  transition-delay: 0s;
 }
 
 .category-thumbnail-container:before,
@@ -180,9 +181,11 @@ a:active {
 
 .category-thumbnail {
   display: block;
+  position: relative;
+  width: 310px;
+  border-radius: 5px;
   transform: translate(0, 0);
   transition: all 0.15s ease;
-  position: relative;
   z-index: 10;
 }
 
@@ -203,6 +206,22 @@ a:active {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.category-loading-thumbnail {
+  width: 310px;
+  height: 413px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  background-color: rgb(40, 40, 40);
+}
+
+.category-loading-title {
+  width: 246px;
+  height: 25px;
+  background-color: rgb(40, 40, 40);
+  border-radius: 5px;
+  margin-bottom: 10px;
 }
 
 /* CHANNEL DISPLAY */
@@ -345,6 +364,38 @@ a:active {
   background-color: rgb(29, 29, 29);
 }
 
+@media (max-width: 100em) {
+  .category-thumbnail {
+    width: 280px;
+  }
+  .category-loading-thumbnail {
+    width: 280px;
+    height: 373px;
+  }
+  .category-loading-title {
+    width: 260px;
+  }
+  .category-game-title {
+    max-width: 260px;
+  }
+}
+
+@media (max-width: 60em) {
+  .category-thumbnail {
+    width: 220px;
+  }
+  .category-loading-thumbnail {
+    width: 220px;
+    height: 295px;
+  }
+  .category-loading-title {
+    width: 200px;
+  }
+  .category-game-title {
+    max-width: 200px;
+  }
+}
+
 @media (max-width: 40em) {
   .sidebar-container {
     display: none;
@@ -378,6 +429,13 @@ a:active {
   }
   .category-thumbnail {
     width: 150px;
+  }
+  .category-loading-thumbnail {
+    width: 150px;
+    height: 200px;
+  }
+  .category-loading-title {
+    width: 130px;
   }
   .category-game-title {
     max-width: 150px;

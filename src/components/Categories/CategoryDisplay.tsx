@@ -1,17 +1,26 @@
 import { fullGameData } from "libs/types";
 
 function CategoryDisplay({
-  gameData,
+  categoryData,
   pageNumber,
   blockCategory,
 }: {
-  gameData: fullGameData | undefined;
+  categoryData: fullGameData | undefined;
   pageNumber: { start: number; end: number };
   blockCategory: (categoryName: string, categoryId: string) => void;
 }) {
   return (
     <div className="category-display-container">
-      {gameData?.data?.slice(0, pageNumber.end).map((game, index) => {
+      {!categoryData?.data.slice(0, pageNumber.end) &&
+        Array.from(Array(100).keys()).map((item, index) => {
+          return (
+            <div key={index} className="category-content-container">
+              <div className="category-loading-thumbnail" />
+              <div className="category-loading-title" />
+            </div>
+          );
+        })}
+      {categoryData?.data?.slice(0, pageNumber.end).map((game, index) => {
         return (
           <div className="category-content-container" key={index}>
             <div className="category-thumbnail-container">
