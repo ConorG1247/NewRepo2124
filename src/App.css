@@ -217,7 +217,7 @@ a:active {
 }
 
 .category-loading-title {
-  width: 246px;
+  width: 80%;
   height: 25px;
   background-color: rgb(40, 40, 40);
   border-radius: 5px;
@@ -239,38 +239,37 @@ a:active {
 }
 
 .channel-channel-title {
-  max-width: 346px;
+  max-width: 560px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .channel-thumbnail-container {
-  width: 346px;
-  height: 195px;
+  display: inline-block;
+  position: relative;
+  width: 560px;
+  height: 316px;
   background-color: rgb(40, 40, 40);
   border-radius: 5px;
   margin-bottom: 10px;
-  transition-delay: 1s;
+  transition-delay: 50ms;
 }
 
 .channel-thumbnail {
-  width: 346px;
-  height: 195px;
+  display: block;
+  position: relative;
+  width: 560px;
+  height: 316px;
   border-radius: 5px;
-  transform: translateX(0px);
-  transition: 200ms ease;
+  transform: translate(0, 0);
+  transition: all 0.15s ease;
+  z-index: 10;
 }
 
 .channel-thumbnail-container:hover {
   background-color: rgb(50, 213, 238);
   transition-delay: 0s;
-}
-
-.channel-thumbnail-container {
-  position: relative;
-  display: inline-block;
-  border-radius: 5px;
 }
 
 .channel-thumbnail-container:before,
@@ -298,14 +297,6 @@ a:active {
   transform: rotate(45deg) scale(0);
 }
 
-.channel-thumbnail {
-  display: block;
-  transform: translate(0, 0);
-  transition: all 0.15s ease;
-  position: relative;
-  z-index: 10;
-}
-
 .channel-thumbnail-container:hover .channel-thumbnail {
   transform: translate(6px, -6px);
 }
@@ -319,15 +310,15 @@ a:active {
 }
 
 .channel-loading-thumbnail {
-  width: 346px;
-  height: 195px;
+  width: 560px;
+  height: 316px;
   background-color: rgb(40, 40, 40);
   border-radius: 5px;
   margin-bottom: 10px;
 }
 
 .channel-loading-title {
-  width: 246px;
+  width: 75%;
   height: 25px;
   background-color: rgb(40, 40, 40);
   border-radius: 5px;
@@ -335,7 +326,7 @@ a:active {
 }
 
 .channel-loading-user {
-  width: 146px;
+  width: 50%;
   height: 25px;
   background-color: rgb(40, 40, 40);
   border-radius: 5px;
@@ -364,6 +355,42 @@ a:active {
   background-color: rgb(29, 29, 29);
 }
 
+@media (max-width: 120em) {
+  .channel-thumbnail-container {
+    width: 500px;
+    height: 282px;
+  }
+  .channel-thumbnail {
+    width: 500px;
+    height: 282px;
+  }
+  .channel-loading-thumbnail {
+    width: 500px;
+    height: 282px;
+  }
+  .channel-channel-title {
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 110em) {
+  .channel-thumbnail-container {
+    width: 450px;
+    height: 254px;
+  }
+  .channel-thumbnail {
+    width: 450px;
+    height: 254px;
+  }
+  .channel-loading-thumbnail {
+    width: 450px;
+    height: 254px;
+  }
+  .channel-channel-title {
+    max-width: 450px;
+  }
+}
+
 @media (max-width: 100em) {
   .category-thumbnail {
     width: 280px;
@@ -372,11 +399,41 @@ a:active {
     width: 280px;
     height: 373px;
   }
-  .category-loading-title {
-    width: 260px;
-  }
   .category-game-title {
     max-width: 260px;
+  }
+  .channel-thumbnail-container {
+    width: 400px;
+    height: 226px;
+  }
+  .channel-thumbnail {
+    width: 400px;
+    height: 226px;
+  }
+  .channel-loading-thumbnail {
+    width: 400px;
+    height: 226px;
+  }
+  .channel-channel-title {
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 90em) {
+  .channel-thumbnail-container {
+    width: 346px;
+    height: 195px;
+  }
+  .channel-thumbnail {
+    width: 346px;
+    height: 195px;
+  }
+  .channel-loading-thumbnail {
+    width: 346px;
+    height: 195px;
+  }
+  .channel-channel-title {
+    max-width: 346px;
   }
 }
 
@@ -388,11 +445,23 @@ a:active {
     width: 220px;
     height: 295px;
   }
-  .category-loading-title {
-    width: 200px;
-  }
   .category-game-title {
     max-width: 200px;
+  }
+  .channel-thumbnail-container {
+    width: 346px;
+    height: 195px;
+  }
+  .channel-thumbnail {
+    width: 346px;
+    height: 195px;
+  }
+  .channel-loading-thumbnail {
+    width: 346px;
+    height: 195px;
+  }
+  .channel-channel-title {
+    max-width: 346px;
   }
 }
 
@@ -424,9 +493,6 @@ a:active {
     width: 10px;
     height: 10px;
   }
-  .channel-display-container {
-    padding-left: 5px;
-  }
   .category-thumbnail {
     width: 150px;
   }
@@ -434,11 +500,11 @@ a:active {
     width: 150px;
     height: 200px;
   }
-  .category-loading-title {
-    width: 130px;
-  }
   .category-game-title {
     max-width: 150px;
+  }
+  .channel-display-container {
+    padding-left: 5px;
   }
   .header-search {
     width: 50%;

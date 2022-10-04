@@ -57,8 +57,8 @@ function ChannelDisplay({
                   <img
                     className="channel-thumbnail"
                     src={channel.thumbnail_url
-                      .replace("{width}", "346")
-                      .replace("{height}", "195")}
+                      .replace("{width}", "530")
+                      .replace("{height}", "316")}
                     alt={channel.user_name}
                   />
                 </div>
