@@ -287,6 +287,7 @@ a:active {
 }
 
 .channel-thumbnail-container:before {
+  width: 15px;
   top: 1.8px;
   left: 0;
   transform-origin: top left;
@@ -294,14 +295,15 @@ a:active {
 }
 
 .channel-thumbnail-container:after {
+  width: 14px;
   right: 0;
-  bottom: 1.8px;
+  bottom: 2.2px;
   transform-origin: bottom right;
   transform: rotate(45deg) scale(0);
 }
 
 .channel-thumbnail-container:hover .channel-thumbnail {
-  transform: translate(6px, -6px);
+  transform: translate(9px, -9px);
 }
 
 .channel-thumbnail-container:hover:before {
