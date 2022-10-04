@@ -41,6 +41,7 @@ function Pagination({
           );
         })} */}
       <button
+        className="pagination-load"
         onClick={() => {
           nextPage();
         }}

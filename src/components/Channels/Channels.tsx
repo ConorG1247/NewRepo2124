@@ -80,7 +80,7 @@ function Channels() {
         pagination: data.pagination,
       };
 
-      while (updatedChannelData.data.length < 300) {
+      while (updatedChannelData.data.length < 250) {
         const res = await fetch(
           `https://api.twitch.tv/helix/streams?first=100&language=en&after=${updatedChannelData.pagination.cursor}`,
           {

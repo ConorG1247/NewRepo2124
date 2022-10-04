@@ -36,19 +36,31 @@ function ChannelDisplay({
 
   return (
     <div className="channel-display-container">
+      {!updatedChannelData?.data.slice(0, pageNumber.end) &&
+        Array.from(Array(100).keys()).map((item, index) => {
+          return (
+            <div key={index} className="channel-content-container">
+              <div className="channel-thumbnail" />
+              <div className="channel-loading-title" />
+              <div className="channel-loading-user" />
+              <div className="channel-loading-user" />
+            </div>
+          );
+        })}
       {updatedChannelData?.data
         .slice(0, pageNumber.end)
         .map((channel, index) => {
           return (
             <div className="channel-content-container" key={index}>
               <a href={`https://www.twitch.tv/${channel.user_login}`}>
-                <img
-                  className="channel-thumbnail"
-                  src={channel.thumbnail_url
-                    .replace("{width}", "346")
-                    .replace("{height}", "195")}
-                  alt={channel.user_name}
-                />
+                <div className="channel-thumbnail">
+                  <img
+                    src={channel.thumbnail_url
+                      .replace("{width}", "346")
+                      .replace("{height}", "195")}
+                    alt={channel.user_name}
+                  />
+                </div>
                 <div>
                   {channel.viewer_count > 1000
                     ? channel.viewer_count > 100000
