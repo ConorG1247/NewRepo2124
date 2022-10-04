@@ -37,7 +37,7 @@ function ChannelDisplay({
   return (
     <div className="channel-display-container">
       {updatedChannelData?.data
-        .slice(pageNumber.start, pageNumber.end)
+        .slice(0, pageNumber.end)
         .map((channel, index) => {
           return (
             <div className="channel-content-container" key={index}>
