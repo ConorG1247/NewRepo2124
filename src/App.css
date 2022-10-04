@@ -143,7 +143,7 @@ a:active {
   position: relative;
   cursor: pointer;
   border-radius: 6px;
-  transition-delay: 1s;
+  transition-delay: 100ms;
 }
 
 .category-thumbnail-container:hover {
