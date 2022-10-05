@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { fullChannelData } from "libs/types";
 import CalculateUptime from "custom/CalculateUptime";
 import { AbbreviateNumbers } from "custom/AbbreviateNumbers";
+import { faClock } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function ChannelDisplay({
   channelData,
@@ -51,8 +53,8 @@ function ChannelDisplay({
         .map((channel, index) => {
           return (
             <div className="channel-content-container" key={index}>
-              <a href={`https://www.twitch.tv/${channel.user_login}`}>
-                <div className="channel-thumbnail-container">
+              <div className="channel-thumbnail-container">
+                <a href={`https://www.twitch.tv/${channel.user_login}`}>
                   <img
                     className="channel-thumbnail"
                     src={channel.thumbnail_url
@@ -60,27 +62,32 @@ function ChannelDisplay({
                       .replace("{height}", "316")}
                     alt={channel.user_name}
                   />
-                  <div className=" channel-viewers">
-                    {channel.viewer_count > 1000
-                      ? channel.viewer_count > 100000
-                        ? AbbreviateNumbers(channel.viewer_count, 0)
-                        : AbbreviateNumbers(channel.viewer_count, 1)
-                      : channel.viewer_count}{" "}
-                    viewers
-                  </div>
-                  <div
-                    className="channel-block"
-                    onClick={() =>
-                      blockChannel(channel.user_login, channel.user_id)
-                    }
-                  >
-                    x
-                  </div>
+                </a>
+
+                <div className=" channel-viewers">
+                  {channel.viewer_count > 1000
+                    ? channel.viewer_count > 100000
+                      ? AbbreviateNumbers(channel.viewer_count, 0)
+                      : AbbreviateNumbers(channel.viewer_count, 1)
+                    : channel.viewer_count}{" "}
+                  viewers
                 </div>
-                <div className="channel-channel-title" title={channel.title}>
-                  {channel.title}
+                <div
+                  className="channel-block"
+                  onClick={() =>
+                    blockChannel(channel.user_login, channel.user_id)
+                  }
+                >
+                  x
                 </div>
-              </a>
+                <div className="channel-uptime">
+                  <FontAwesomeIcon icon={faClock} className="channel-clock" />{" "}
+                  {channel.uptime}
+                </div>
+              </div>
+              <div className="channel-channel-title" title={channel.title}>
+                {channel.title}
+              </div>
               <div>{channel.user_name}</div>
               <div className="channel-channel-title" title={channel.game_name}>
                 {channel.game_name}
@@ -94,7 +101,6 @@ function ChannelDisplay({
                   );
                 })}
               </div>
-              <div>{channel.uptime}</div>
             </div>
           );
         })}
