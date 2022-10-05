@@ -132,24 +132,16 @@ function Channels() {
     getChannelData();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [blockListData, languageFilter]);
+  }, [languageFilter, blockListData]);
 
-  useEffect(() => {}, [languageFilter]);
+  console.log(channelData);
 
   useEffect(() => {
     if (channelData) {
       let updatedChannelData: individualChannelData[] = channelData.data;
-      let channelDataTags: any = {
-        data: [],
-        pagination: { cursor: "" },
-      };
+      let channelDataTags: any = channelData;
 
-      updatedChannelData.forEach((channel) => {
-        channelDataTags = {
-          data: [...channelDataTags.data, { ...channel, tags: [] }],
-          pagination: channelData.pagination,
-        };
-      });
+      console.log(updatedChannelData);
 
       if (blockListData && blockListData?.blocklist.channel.length > 0) {
         blockListData?.blocklist.channel.forEach((blockedChannels) => {
@@ -180,7 +172,7 @@ function Channels() {
 
       if (!blockListData) {
         return setBlockedChannelData({
-          data: updatedChannelData,
+          data: channelDataTags.data,
           pagination: channelData.pagination,
         });
       }
