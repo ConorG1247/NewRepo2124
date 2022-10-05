@@ -16,12 +16,20 @@ function ChannelFilter() {
       <div className="channel-language-option-container">
         {StreamLanguage.map((language, index) => {
           return (
-            <div key={index} className="channel-language-option">
+            <div>
               {languageInput &&
                 language.language
                   .toLocaleLowerCase()
-                  .includes(languageInput) && <div>{language.language}</div>}
-              {!languageInput && <div>{language.language}</div>}
+                  .includes(languageInput) && (
+                  <div key={index} className="channel-language-option">
+                    <div>{language.language}</div>
+                  </div>
+                )}
+              {!languageInput && (
+                <div key={index} className="channel-language-option">
+                  <div>{language.language}</div>
+                </div>
+              )}
             </div>
           );
         })}

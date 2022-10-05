@@ -308,7 +308,7 @@ a:active {
   overflow: hidden;
   overflow-y: auto;
   width: 208px;
-  height: 200px;
+  max-height: 200px;
   top: 30px;
   right: 0;
   border-radius: 5px;
@@ -320,7 +320,7 @@ a:active {
 .channel-language-option {
   cursor: pointer;
   border-radius: 5px;
-  padding: 10px 0px 10px 10px;
+  padding: 10px;
 }
 
 .channel-language-container:focus-within .channel-language-option-container {
