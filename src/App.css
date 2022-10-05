@@ -300,11 +300,41 @@ a:active {
   justify-content: space-between;
   align-items: center;
   margin: 15px 0px 15px 10px;
-  width: 300px;
+  width: 320px;
 }
 
 .channel-language-input {
   width: 200px;
+  margin-left: 10px;
+  padding: 5px 5px 5px 10px;
+  border-radius: 5px;
+  font-size: 1em;
+  color: rgb(201, 201, 201);
+  border: 2.5px solid rgb(70, 70, 70);
+  background-color: rgb(60, 60, 60);
+  transition: 100ms;
+}
+
+.channel-language-input:hover {
+  border: 2.5px solid rgb(109, 109, 109);
+}
+
+.channel-language-input::placeholder {
+  color: rgb(201, 201, 201);
+}
+
+.channel-language-input:focus {
+  border-color: rgb(222, 222, 222, 0.6);
+  outline: 0 none;
+}
+
+.channel-language-input-x {
+  position: absolute;
+  cursor: pointer;
+  top: 8px;
+  right: 13px;
+  font-size: 0.9em;
+  color: rgb(255, 255, 255);
 }
 
 .channel-language-option-container {
@@ -312,11 +342,10 @@ a:active {
   display: flex;
   flex-direction: column;
   position: absolute;
-  overflow: hidden;
   overflow-y: auto;
-  width: 208px;
+  width: 219px;
   max-height: 250px;
-  top: 30px;
+  top: 39px;
   right: 0;
   border-radius: 5px;
   border: 1px solid rgb(52, 52, 52);

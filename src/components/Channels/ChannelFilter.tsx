@@ -1,8 +1,8 @@
-import { StreamLanguage } from "libs/StreamLanguage";
 import { useState } from "react";
+import { StreamLanguage } from "libs/StreamLanguage";
 
 function ChannelFilter() {
-  const [languageInput, setLanguageInput] = useState<string | undefined>();
+  const [languageInput, setLanguageInput] = useState<string>("");
   const [noResultsCheck, setNoResultsCheck] = useState(false);
   const [languageSelected, setLanguageSelected] = useState<string[]>([]);
 
@@ -11,7 +11,7 @@ function ChannelFilter() {
 
     if (
       StreamLanguage.filter((lang) =>
-        lang.language.toLocaleLowerCase().includes(input)
+        lang.language.toLocaleLowerCase().includes(input.toLocaleLowerCase())
       ).length === 0
     ) {
       setNoResultsCheck(true);
@@ -27,6 +27,7 @@ function ChannelFilter() {
       return;
     }
     setLanguageSelected([...languageSelected, language.language]);
+    setLanguageInput("");
   };
 
   const removeSelectedLanguage = (language: string) => {
@@ -37,16 +38,28 @@ function ChannelFilter() {
     );
   };
 
+  const clearInput = () => {
+    setNoResultsCheck(false);
+    setLanguageInput("");
+  };
+
   return (
     <div className="channel-language">
       <div className="channel-language-container">
         <div>Filter by </div>
         <input
+          value={languageInput}
+          placeholder="Language"
           className="channel-language-input"
           onChange={(input) => {
-            languageResultsCheck(input.target.value.toLocaleLowerCase());
+            languageResultsCheck(input.target.value);
           }}
         />
+        {languageInput && (
+          <div className="channel-language-input-x" onClick={clearInput}>
+            X
+          </div>
+        )}
         <div className="channel-language-option-container">
           {StreamLanguage.map((language, index) => {
             return (
@@ -54,7 +67,7 @@ function ChannelFilter() {
                 {languageInput &&
                   language.language
                     .toLocaleLowerCase()
-                    .includes(languageInput) && (
+                    .includes(languageInput.toLocaleLowerCase()) && (
                     <div
                       className="channel-language-option"
                       onClick={() => selectLanguage(language)}
