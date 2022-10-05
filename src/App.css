@@ -358,6 +358,7 @@ a:active {
   cursor: pointer;
   border-radius: 5px;
   padding: 10px;
+  transition: 100ms;
 }
 
 .channel-language-container:focus-within .channel-language-option-container {

@@ -27,6 +27,7 @@ function Channels() {
       channel: blockListItem[];
     };
   }>();
+  const [languageFilter, setLanguageFilter] = useState<string[]>([]);
 
   useEffect(() => {
     const getBlockListData = async () => {
@@ -115,6 +116,8 @@ function Channels() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blockListData]);
 
+  useEffect(() => {}, [languageFilter]);
+
   useEffect(() => {
     if (channelData) {
       let updatedChannelData: individualChannelData[] = channelData.data;
@@ -136,9 +139,7 @@ function Channels() {
             return blockedChannels.id !== channel.user_id;
           });
         });
-      }
 
-      if (blockListData && blockListData?.blocklist.category.length > 0) {
         blockListData?.blocklist.category.forEach((blockedCategories) => {
           channelDataTags.data = channelDataTags.data.filter((game: any) => {
             return blockedCategories.id !== game.game_id;
@@ -254,6 +255,10 @@ function Channels() {
       }),
     });
   };
+
+  const addLanguageFilter = (language: string) => {};
+
+  const removeLanguageFilter = (language: string) => {};
 
   return (
     <div>

@@ -4,7 +4,9 @@ import { StreamLanguage } from "libs/StreamLanguage";
 function ChannelFilter() {
   const [languageInput, setLanguageInput] = useState<string>("");
   const [noResultsCheck, setNoResultsCheck] = useState(false);
-  const [languageSelected, setLanguageSelected] = useState<string[]>([]);
+  const [languageSelected, setLanguageSelected] = useState<
+    { language: string; code: string }[]
+  >([]);
 
   const languageResultsCheck = (input: string) => {
     setLanguageInput(input);
@@ -22,18 +24,24 @@ function ChannelFilter() {
 
   const selectLanguage = (language: { language: string; code: string }) => {
     if (
-      languageSelected.filter((lang) => lang === language.language).length > 0
+      languageSelected.filter((lang) => lang.language === language.language)
+        .length > 0
     ) {
       return;
     }
-    setLanguageSelected([...languageSelected, language.language]);
+    // addLanguageFilter(language.code)
+    setLanguageSelected([...languageSelected, language]);
     setLanguageInput("");
   };
 
-  const removeSelectedLanguage = (language: string) => {
+  const removeSelectedLanguage = (language: {
+    language: string;
+    code: string;
+  }) => {
+    // removeLanguageFilter(language);
     setLanguageSelected(
       languageSelected.filter((lang) => {
-        return language !== lang;
+        return language.language !== lang.language;
       })
     );
   };
@@ -98,7 +106,7 @@ function ChannelFilter() {
           languageSelected.map((lang, index) => {
             return (
               <div key={index} className="channel-language-selected">
-                <div>{lang}</div>
+                <div>{lang.language}</div>
                 <div
                   className="channel-language-x"
                   onClick={() => removeSelectedLanguage(lang)}
