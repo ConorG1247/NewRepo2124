@@ -51,6 +51,7 @@ function ChannelDisplay({
       {updatedChannelData?.data
         .slice(0, pageNumber.end)
         .map((channel, index) => {
+          console.log(channel.started_at);
           return (
             <div className="channel-content-container" key={index}>
               <div className="channel-thumbnail-container">
@@ -80,7 +81,12 @@ function ChannelDisplay({
                 >
                   x
                 </div>
-                <div className="channel-uptime">
+                <div
+                  className="channel-uptime"
+                  title={
+                    "Started at: " + channel.started_at.replace(/[TZ]/g, " ")
+                  }
+                >
                   <FontAwesomeIcon icon={faClock} className="channel-clock" />{" "}
                   {channel.uptime}
                 </div>
