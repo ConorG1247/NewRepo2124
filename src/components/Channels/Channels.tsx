@@ -78,7 +78,6 @@ function Channels() {
     const getChannelData = async () => {
       if (languageFilter.length > 0) {
         languageFilter.forEach((filter) => {
-          console.log(filter.code);
           url = url + `&language=${filter.code}`;
         });
       }
@@ -116,16 +115,16 @@ function Channels() {
         }
       }
 
-      updatedChannelData.data.forEach((channel) => {
-        channelDataTags = {
-          data: [...channelDataTags.data, { ...channel, tags: [] }],
-          pagination: data.pagination,
-        };
-      });
+      // updatedChannelData.data.forEach((channel) => {
+      //   channelDataTags = {
+      //     data: [...channelDataTags.data, { ...channel, tags: [] }],
+      //     pagination: data.pagination,
+      //   };
+      // });
 
       setChannelData({
-        data: channelDataTags.data,
-        pagination: channelDataTags.pagination,
+        data: updatedChannelData.data,
+        pagination: updatedChannelData.pagination,
       });
     };
 
@@ -134,14 +133,20 @@ function Channels() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageFilter, blockListData]);
 
-  console.log(channelData);
-
   useEffect(() => {
     if (channelData) {
-      let updatedChannelData: individualChannelData[] = channelData.data;
-      let channelDataTags: any = channelData;
+      let updatedChannelData: fullChannelData = channelData;
+      let channelDataTags: any = {
+        data: [],
+        pagination: channelData.pagination,
+      };
 
-      console.log(updatedChannelData);
+      updatedChannelData.data.forEach((channel: any) => {
+        channelDataTags = {
+          data: [...channelDataTags.data, { ...channel, tags: [] }],
+          pagination: channelData.pagination,
+        };
+      });
 
       if (blockListData && blockListData?.blocklist.channel.length > 0) {
         blockListData?.blocklist.channel.forEach((blockedChannels) => {
@@ -170,13 +175,6 @@ function Channels() {
         });
       });
 
-      if (!blockListData) {
-        return setBlockedChannelData({
-          data: channelDataTags.data,
-          pagination: channelData.pagination,
-        });
-      }
-
       setBlockedChannelData({
         data: channelDataTags.data,
         pagination: channelData.pagination,
@@ -189,11 +187,11 @@ function Channels() {
 
     if (languageFilter.length > 0) {
       languageFilter.forEach((filter) => {
-        url = url + `&language=${filter}`;
+        url = url + `&language=${filter.code}`;
       });
     }
 
-    if (blockedChannelData && channelData) {
+    if (blockedChannelData && channelData && channelData.pagination.cursor) {
       const res = await fetch(`${url}&after=${channelData.pagination.cursor}`, {
         method: "GET",
         headers: header,
@@ -273,8 +271,6 @@ function Channels() {
   };
 
   const removeLanguageFilter = (language: string) => {
-    console.log(language);
-    console.log(languageFilter.filter((lang) => lang.code !== language));
     setLanguageFilter(languageFilter.filter((lang) => lang.code !== language));
   };
 

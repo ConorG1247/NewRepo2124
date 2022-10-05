@@ -23,6 +23,10 @@ function ChannelFilter({
 
       const data: userData = await res.json();
 
+      if (!data.blocklist) {
+        return;
+      }
+
       setLanguageSelected([...languageSelected, ...data.language]);
     };
 
