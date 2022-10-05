@@ -56,7 +56,7 @@ function Channels() {
       pagination: { cursor: "" },
     };
 
-    let channelDataTags: any = {
+    let channelDataTags: fullChannelData = {
       data: [],
       pagination: { cursor: "" },
     };

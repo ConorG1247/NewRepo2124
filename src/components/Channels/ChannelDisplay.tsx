@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { fullChannelData, uptimeChannelData } from "libs/types";
+import { fullChannelData } from "libs/types";
 import CalculateUptime from "custom/CalculateUptime";
 import { AbbreviateNumbers } from "custom/AbbreviateNumbers";
 
@@ -12,23 +12,22 @@ function ChannelDisplay({
   pageNumber: { start: number; end: number };
   blockChannel: (channelName: string, channelId: string) => void;
 }) {
-  const [updatedChannelData, setUpdatedChannelData] = useState<{
-    data: uptimeChannelData[];
-    pagation: { cursor: string };
-  }>();
+  const [updatedChannelData, setUpdatedChannelData] =
+    useState<fullChannelData>();
 
   useEffect(() => {
-    let channelDataUptime: any = channelData;
+    let channelDataUptime: fullChannelData | undefined = channelData;
 
     const getUptime = () => {
       channelData?.data.forEach((channel, index) => {
         const uptime = CalculateUptime(channel);
-        channelDataUptime.data[index] = { ...channel, uptime: uptime };
+        if (channelDataUptime) {
+          channelDataUptime.data[index] = { ...channel, uptime: uptime };
+        }
       });
 
       setUpdatedChannelData(channelDataUptime);
     };
-
     getUptime();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -87,7 +86,7 @@ function ChannelDisplay({
                 {channel.game_name}
               </div>
               <div className="channel-tags-container">
-                {channel.tags.map((tag, index) => {
+                {channel?.tags?.map((tag, index) => {
                   return (
                     <div key={index} className="channel-tags-content">
                       {tag}
