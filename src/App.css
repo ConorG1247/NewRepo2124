@@ -344,7 +344,7 @@ a:active {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  padding: 0px 10px;
+  padding: 0px 10px 0px 10px;
 }
 
 .channel-language-selected {
@@ -368,11 +368,11 @@ a:active {
 }
 
 .channel-language-x:hover {
-  background-color: rgb(165, 165, 165);
+  background-color: rgb(105, 105, 105);
 }
 
 .channel-language-x:active {
-  background-color: rgb(124, 124, 124);
+  background-color: rgb(91, 91, 91);
 }
 
 /* CONTENT */
@@ -496,6 +496,10 @@ a:active {
 
 .channel-block:hover {
   background-color: rgb(50, 213, 238, 1);
+}
+
+.channel-block:active {
+  background-color: rgb(43, 189, 211);
 }
 
 .channel-uptime {
@@ -801,9 +805,10 @@ a:active {
   .header-search {
     width: 50%;
   }
-  .channel-language-selected {
-    margin: 0px 5px 10px 5px;
+  .channel-language-selected-container {
+    padding: 0px 10px 0px 14px;
   }
+
   .channel-language-container {
     margin: 10px 0px 10px 15px;
   }

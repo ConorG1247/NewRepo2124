@@ -29,6 +29,14 @@ function ChannelFilter() {
     setLanguageSelected([...languageSelected, language.language]);
   };
 
+  const removeSelectedLanguage = (language: string) => {
+    setLanguageSelected(
+      languageSelected.filter((lang) => {
+        return language !== lang;
+      })
+    );
+  };
+
   return (
     <div className="channel-language">
       <div className="channel-language-container">
@@ -78,7 +86,12 @@ function ChannelFilter() {
             return (
               <div key={index} className="channel-language-selected">
                 <div>{lang}</div>
-                <div className="channel-language-x">x</div>
+                <div
+                  className="channel-language-x"
+                  onClick={() => removeSelectedLanguage(lang)}
+                >
+                  x
+                </div>
               </div>
             );
           })}
