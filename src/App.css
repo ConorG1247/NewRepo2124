@@ -21,7 +21,10 @@ a:hover,
 a:active {
   color: inherit;
 }
+
+/*///////////*/
 /* SCROLLBAR */
+/*///////////*/
 
 .main-content-container::-webkit-scrollbar {
   width: 12px;
@@ -37,7 +40,24 @@ a:active {
   background-color: rgb(64, 64, 64);
 }
 
+.channel-language-option-container::-webkit-scrollbar {
+  width: 12px;
+}
+
+.channel-language-option-container::-webkit-scrollbar-track {
+  background: rgb(40, 40, 40);
+  visibility: hidden;
+}
+
+.channel-language-option-container::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  border: 3px solid rgb(64, 64, 64);
+  background-color: rgb(64, 64, 64);
+}
+
+/*////////*/
 /* HEADER */
+/*////////*/
 
 .header-container {
   display: flex;
@@ -66,7 +86,9 @@ a:active {
   padding-right: 10px;
 }
 
+/*/////////*/
 /* SIDEBAR */
+/*/////////*/
 
 .sidebar-container {
   display: flex;
@@ -81,7 +103,9 @@ a:active {
   z-index: 8;
 }
 
+/*//////////////*/
 /* PAGE CONTENT */
+/*//////////////*/
 
 .main-content-container {
   display: flex;
@@ -92,7 +116,9 @@ a:active {
   padding: 20px 0px 23px 140px;
 }
 
+/*//////////////*/
 /* MAIN CONTENT */
+/*//////////////*/
 
 .main-container {
   display: flex;
@@ -125,7 +151,9 @@ a:active {
   transition: 100ms;
 }
 
+/*//////////////////*/
 /* CATEGORY DISPLAY */
+/*//////////////////*/
 
 .category-container {
   display: flex;
@@ -233,7 +261,9 @@ a:active {
   margin-bottom: 10px;
 }
 
+/*/////////////////*/
 /* CHANNEL DISPLAY */
+/*/////////////////*/
 
 .channel-display-container {
   display: flex;
@@ -257,11 +287,14 @@ a:active {
   margin-bottom: 5px;
 }
 
+/* LANGUAGE FILTER */
+
 .channel-language-container {
   display: flex;
   position: relative;
+  justify-content: space-between;
   margin: 10px 0px 10px 15px;
-  width: 200px;
+  width: 400px;
 }
 
 .channel-language-input {
@@ -272,11 +305,22 @@ a:active {
   display: none;
   flex-direction: column;
   position: absolute;
+  overflow: hidden;
+  overflow-y: auto;
   width: 208px;
+  height: 200px;
   top: 30px;
-  left: 0;
-  background-color: rgb(162, 162, 162);
+  right: 0;
+  border-radius: 5px;
+  border: 1px solid rgb(52, 52, 52);
+  background-color: rgb(32, 32, 32);
   z-index: 9;
+}
+
+.channel-language-option {
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 10px 0px 10px 10px;
 }
 
 .channel-language-container:focus-within .channel-language-option-container {
@@ -286,6 +330,8 @@ a:active {
 .channel-language-option:hover {
   background-color: rgb(20, 20, 20);
 }
+
+/* CONTENT */
 
 .channel-content-subtitle {
   color: rgb(184, 184, 184);
@@ -302,6 +348,8 @@ a:active {
   margin-bottom: 10px;
   transition-delay: 50ms;
 }
+
+/* THUMBNAIL HOVER EFFECT */
 
 .channel-thumbnail {
   display: block;
@@ -370,30 +418,6 @@ a:active {
   transform: rotate(45deg) scale(1);
 }
 
-.channel-loading-thumbnail {
-  width: 560px;
-  height: 316px;
-  background-color: rgb(40, 40, 40);
-  border-radius: 5px;
-  margin-bottom: 10px;
-}
-
-.channel-loading-title {
-  width: 75%;
-  height: 25px;
-  background-color: rgb(40, 40, 40);
-  border-radius: 5px;
-  margin-bottom: 10px;
-}
-
-.channel-loading-user {
-  width: 50%;
-  height: 25px;
-  border-radius: 5px;
-  background-color: rgb(40, 40, 40);
-  margin-bottom: 10px;
-}
-
 .channel-viewers {
   display: flex;
   position: absolute;
@@ -452,7 +476,33 @@ a:active {
   margin-right: 5px;
 }
 
-/* CHANNEL TAGS */
+/* LOADING */
+
+.channel-loading-thumbnail {
+  width: 560px;
+  height: 316px;
+  background-color: rgb(40, 40, 40);
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.channel-loading-title {
+  width: 75%;
+  height: 25px;
+  background-color: rgb(40, 40, 40);
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.channel-loading-user {
+  width: 50%;
+  height: 25px;
+  border-radius: 5px;
+  background-color: rgb(40, 40, 40);
+  margin-bottom: 10px;
+}
+
+/*  TAGS */
 
 .channel-tags-container {
   display: flex;
@@ -467,7 +517,9 @@ a:active {
   background-color: rgb(40, 40, 40);
 }
 
+/*////////////*/
 /* PAGINATION */
+/*////////////*/
 
 .pagination-load {
   cursor: pointer;
@@ -488,6 +540,10 @@ a:active {
 .pagination-load:active {
   background-color: rgb(29, 29, 29);
 }
+
+/*////////////////////*/
+/* SCREEN BREAKPOINTS */
+/*////////////////////*/
 
 @media (max-width: 120em) {
   .channel-thumbnail-container {
