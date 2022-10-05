@@ -50,10 +50,11 @@ export type blockListItem = {
   _id: string;
 };
 
-export type fullBlockList = {
+export type userData = {
   user: string;
   blocklist: {
     category: blockListItem[];
     channel: blockListItem[];
   };
+  language: { language: string; code: string }[];
 };

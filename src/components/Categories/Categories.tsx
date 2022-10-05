@@ -3,7 +3,7 @@ import {
   gameData,
   fullGameData,
   fullIndividualGameData,
-  fullBlockList,
+  userData,
   blockListItem,
 } from "libs/types";
 import CategoryDisplay from "./CategoryDisplay";
@@ -28,7 +28,7 @@ function Categories() {
         method: "GET",
       });
 
-      const data: fullBlockList = await res.json();
+      const data: userData = await res.json();
 
       if (!data.blocklist) {
         return setBlockListData([]);

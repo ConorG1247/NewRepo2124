@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import {
   fullChannelData,
   individualChannelData,
-  fullBlockList,
+  userData,
   blockListItem,
 } from "libs/types";
 import Pagination from "components/Pagination/Pagination";
@@ -32,7 +32,9 @@ function Channels() {
       channel: blockListItem[];
     };
   }>();
-  const [languageFilter, setLanguageFilter] = useState<string[]>([]);
+  const [languageFilter, setLanguageFilter] = useState<
+    { language: string; code: string }[]
+  >([]);
 
   useEffect(() => {
     const getBlockListData = async () => {
@@ -40,11 +42,13 @@ function Channels() {
         method: "GET",
       });
 
-      const data: fullBlockList = await res.json();
+      const data: userData = await res.json();
 
       if (!data.blocklist) {
         return setBlockListData(undefined);
       }
+
+      setLanguageFilter([...languageFilter, ...data.language]);
 
       setBlockListData({
         blocklist: {
@@ -54,6 +58,8 @@ function Channels() {
       });
     };
     getBlockListData();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -72,7 +78,8 @@ function Channels() {
     const getChannelData = async () => {
       if (languageFilter.length > 0) {
         languageFilter.forEach((filter) => {
-          url = url + `&language=${filter}`;
+          console.log(filter.code);
+          url = url + `&language=${filter.code}`;
         });
       }
 
@@ -83,14 +90,10 @@ function Channels() {
 
       const data: fullChannelData = await res.json();
 
-      console.log(data);
-
       updatedChannelData = {
         data: [...updatedChannelData.data, ...data.data],
         pagination: data.pagination,
       };
-
-      console.log(updatedChannelData);
 
       while (updatedChannelData.data.length < 250) {
         const res = await fetch(
@@ -273,15 +276,15 @@ function Channels() {
     });
   };
 
-  const addLanguageFilter = (language: string) => {
-    setLanguageFilter([...languageFilter, language]);
+  const addLanguageFilter = (language: { language: string; code: string }) => {
+    setLanguageFilter([...languageFilter, { ...language }]);
   };
 
   const removeLanguageFilter = (language: string) => {
-    setLanguageFilter(languageFilter.filter((lang) => lang !== language));
+    console.log(language);
+    console.log(languageFilter.filter((lang) => lang.code !== language));
+    setLanguageFilter(languageFilter.filter((lang) => lang.code !== language));
   };
-
-  console.log(languageFilter);
 
   return (
     <div>

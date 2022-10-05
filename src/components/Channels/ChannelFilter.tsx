@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { StreamLanguage } from "libs/StreamLanguage";
+import { userData } from "libs/types";
 
 function ChannelFilter({
   addLanguageFilter,
   removeLanguageFilter,
 }: {
-  addLanguageFilter: (language: string) => void;
+  addLanguageFilter: (language: { language: string; code: string }) => void;
   removeLanguageFilter: (language: string) => void;
 }) {
   const [languageInput, setLanguageInput] = useState<string>("");
@@ -13,6 +14,21 @@ function ChannelFilter({
   const [languageSelected, setLanguageSelected] = useState<
     { language: string; code: string }[]
   >([]);
+
+  useEffect(() => {
+    const getLanguageData = async () => {
+      const res = await fetch("http://localhost:3001/get/all/guest", {
+        method: "GET",
+      });
+
+      const data: userData = await res.json();
+
+      setLanguageSelected([...languageSelected, ...data.language]);
+    };
+
+    getLanguageData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const languageResultsCheck = (input: string) => {
     setLanguageInput(input);
@@ -28,19 +44,31 @@ function ChannelFilter({
     }
   };
 
-  const selectLanguage = (language: { language: string; code: string }) => {
+  const selectLanguage = async (language: {
+    language: string;
+    code: string;
+  }) => {
     if (
       languageSelected.filter((lang) => lang.language === language.language)
         .length > 0
     ) {
       return;
     }
-    addLanguageFilter(language.code);
+    addLanguageFilter(language);
     setLanguageSelected([...languageSelected, language]);
     setLanguageInput("");
+
+    await fetch("http://localhost:3001/add/language", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user: "guest",
+        language: { language: language.language, code: language.code },
+      }),
+    });
   };
 
-  const removeSelectedLanguage = (language: {
+  const removeSelectedLanguage = async (language: {
     language: string;
     code: string;
   }) => {
@@ -50,6 +78,15 @@ function ChannelFilter({
         return language.language !== lang.language;
       })
     );
+
+    await fetch("http://localhost:3001/remove/language", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user: "guest",
+        language: { language: language.language, code: language.code },
+      }),
+    });
   };
 
   const clearInput = () => {

@@ -17,7 +17,7 @@ function ChannelDisplay({
   channelData: fullChannelData | undefined;
   pageNumber: { start: number; end: number };
   blockChannel: (channelName: string, channelId: string) => void;
-  addLanguageFilter: (language: string) => void;
+  addLanguageFilter: (language: { language: string; code: string }) => void;
   removeLanguageFilter: (language: string) => void;
 }) {
   const [updatedChannelData, setUpdatedChannelData] =
