@@ -62,16 +62,13 @@ function Channels() {
     };
 
     const getChannelData = async () => {
-      const res = await fetch(
-        "https://api.twitch.tv/helix/streams?first=100&language=en",
-        {
-          method: "GET",
-          headers: {
-            Authorization: "Bearer hjn4lfvaa9vd04rv4ttw3nlnifndi7",
-            "Client-Id": "hra765tyzo51u6ju9i7ihfmckwzuss",
-          },
-        }
-      );
+      const res = await fetch("https://api.twitch.tv/helix/streams?first=100", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer hjn4lfvaa9vd04rv4ttw3nlnifndi7",
+          "Client-Id": "hra765tyzo51u6ju9i7ihfmckwzuss",
+        },
+      });
 
       const data: fullChannelData = await res.json();
 
@@ -82,7 +79,7 @@ function Channels() {
 
       while (updatedChannelData.data.length < 250) {
         const res = await fetch(
-          `https://api.twitch.tv/helix/streams?first=100&language=en&after=${updatedChannelData.pagination.cursor}`,
+          `https://api.twitch.tv/helix/streams?first=100&after=${updatedChannelData.pagination.cursor}`,
           {
             method: "GET",
             headers: {
@@ -179,7 +176,7 @@ function Channels() {
   const nextChannelPage = async () => {
     if (blockedChannelData && channelData) {
       const res = await fetch(
-        `https://api.twitch.tv/helix/streams?first=100&language=en&after=${channelData.pagination.cursor}`,
+        `https://api.twitch.tv/helix/streams?first=100&after=${channelData.pagination.cursor}`,
         {
           method: "GET",
           headers: {
