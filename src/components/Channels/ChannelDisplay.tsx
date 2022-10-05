@@ -5,6 +5,7 @@ import { AbbreviateNumbers } from "custom/AbbreviateNumbers";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ChannelLoading from "./ChannelLoading";
+import ChannelFilter from "./ChannelFilter";
 
 function ChannelDisplay({
   channelData,
@@ -38,10 +39,7 @@ function ChannelDisplay({
 
   return (
     <div>
-      <div className="channel-language-filter">English</div>
-      {/* <select className="channel-language-filter">
-        <option value={"en"}>English</option>
-      </select> */}
+      <ChannelFilter />
       <ChannelLoading
         updatedChannelData={updatedChannelData}
         pageNumber={pageNumber}

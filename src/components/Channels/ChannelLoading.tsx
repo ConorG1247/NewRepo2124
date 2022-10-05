@@ -9,7 +9,6 @@ function ChannelLoading({
 }) {
   return (
     <div className="channel-display-container">
-      {" "}
       {!updatedChannelData?.data.slice(0, pageNumber.end) &&
         Array.from(Array(100).keys()).map((item, index) => {
           return (

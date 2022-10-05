@@ -257,8 +257,34 @@ a:active {
   margin-bottom: 5px;
 }
 
-.channel-language-filter {
+.channel-language-container {
+  display: flex;
+  position: relative;
   margin: 10px 0px 10px 15px;
+  width: 200px;
+}
+
+.channel-language-input {
+  width: 200px;
+}
+
+.channel-language-option-container {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  width: 208px;
+  top: 30px;
+  left: 0;
+  background-color: rgb(162, 162, 162);
+  z-index: 9;
+}
+
+.channel-language-container:focus-within .channel-language-option-container {
+  display: flex;
+}
+
+.channel-language-option:hover {
+  background-color: rgb(20, 20, 20);
 }
 
 .channel-content-subtitle {
