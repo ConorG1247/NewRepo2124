@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { StreamLanguage } from "libs/StreamLanguage";
 
-function ChannelFilter() {
+function ChannelFilter({
+  addLanguageFilter,
+  removeLanguageFilter,
+}: {
+  addLanguageFilter: (language: string) => void;
+  removeLanguageFilter: (language: string) => void;
+}) {
   const [languageInput, setLanguageInput] = useState<string>("");
   const [noResultsCheck, setNoResultsCheck] = useState(false);
   const [languageSelected, setLanguageSelected] = useState<
@@ -29,7 +35,7 @@ function ChannelFilter() {
     ) {
       return;
     }
-    // addLanguageFilter(language.code)
+    addLanguageFilter(language.code);
     setLanguageSelected([...languageSelected, language]);
     setLanguageInput("");
   };
@@ -38,7 +44,7 @@ function ChannelFilter() {
     language: string;
     code: string;
   }) => {
-    // removeLanguageFilter(language);
+    removeLanguageFilter(language.code);
     setLanguageSelected(
       languageSelected.filter((lang) => {
         return language.language !== lang.language;

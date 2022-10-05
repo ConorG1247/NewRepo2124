@@ -11,10 +11,14 @@ function ChannelDisplay({
   channelData,
   pageNumber,
   blockChannel,
+  addLanguageFilter,
+  removeLanguageFilter,
 }: {
   channelData: fullChannelData | undefined;
   pageNumber: { start: number; end: number };
   blockChannel: (channelName: string, channelId: string) => void;
+  addLanguageFilter: (language: string) => void;
+  removeLanguageFilter: (language: string) => void;
 }) {
   const [updatedChannelData, setUpdatedChannelData] =
     useState<fullChannelData>();
@@ -39,7 +43,10 @@ function ChannelDisplay({
 
   return (
     <div>
-      <ChannelFilter />
+      <ChannelFilter
+        addLanguageFilter={addLanguageFilter}
+        removeLanguageFilter={removeLanguageFilter}
+      />
       <ChannelLoading
         updatedChannelData={updatedChannelData}
         pageNumber={pageNumber}

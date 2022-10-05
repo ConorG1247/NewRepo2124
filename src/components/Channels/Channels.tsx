@@ -9,6 +9,11 @@ import Pagination from "components/Pagination/Pagination";
 import ChannelDisplay from "./ChannelDisplay";
 import { StreamTags } from "libs/StreamTags";
 
+const header = {
+  Authorization: "Bearer hjn4lfvaa9vd04rv4ttw3nlnifndi7",
+  "Client-Id": "hra765tyzo51u6ju9i7ihfmckwzuss",
+};
+
 function Channels() {
   const [channelData, setChannelData] = useState<fullChannelData>();
   const [blockedChannelData, setBlockedChannelData] =
@@ -62,40 +67,50 @@ function Channels() {
       pagination: { cursor: "" },
     };
 
+    let url: string = "https://api.twitch.tv/helix/streams?first=100";
+
     const getChannelData = async () => {
-      const res = await fetch("https://api.twitch.tv/helix/streams?first=100", {
+      if (languageFilter.length > 0) {
+        languageFilter.forEach((filter) => {
+          url = url + `&language=${filter}`;
+        });
+      }
+
+      const res = await fetch(url, {
         method: "GET",
-        headers: {
-          Authorization: "Bearer hjn4lfvaa9vd04rv4ttw3nlnifndi7",
-          "Client-Id": "hra765tyzo51u6ju9i7ihfmckwzuss",
-        },
+        headers: header,
       });
 
       const data: fullChannelData = await res.json();
+
+      console.log(data);
 
       updatedChannelData = {
         data: [...updatedChannelData.data, ...data.data],
         pagination: data.pagination,
       };
 
+      console.log(updatedChannelData);
+
       while (updatedChannelData.data.length < 250) {
         const res = await fetch(
-          `https://api.twitch.tv/helix/streams?first=100&after=${updatedChannelData.pagination.cursor}`,
+          `${url}&after=${updatedChannelData.pagination.cursor}`,
           {
             method: "GET",
-            headers: {
-              Authorization: "Bearer hjn4lfvaa9vd04rv4ttw3nlnifndi7",
-              "Client-Id": "hra765tyzo51u6ju9i7ihfmckwzuss",
-            },
+            headers: header,
           }
         );
 
         const data: fullChannelData = await res.json();
 
-        updatedChannelData = {
-          data: [...updatedChannelData.data, ...data.data],
-          pagination: data.pagination,
-        };
+        if (data.data.length === 0 || data.pagination.cursor.length === 0) {
+          break;
+        } else {
+          updatedChannelData = {
+            data: [...updatedChannelData.data, ...data.data],
+            pagination: data.pagination,
+          };
+        }
       }
 
       updatedChannelData.data.forEach((channel) => {
@@ -114,7 +129,7 @@ function Channels() {
     getChannelData();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [blockListData]);
+  }, [blockListData, languageFilter]);
 
   useEffect(() => {}, [languageFilter]);
 
@@ -175,17 +190,19 @@ function Channels() {
   }, [blockListData, channelData]);
 
   const nextChannelPage = async () => {
+    let url: string = "https://api.twitch.tv/helix/streams?first=100";
+
+    if (languageFilter.length > 0) {
+      languageFilter.forEach((filter) => {
+        url = url + `&language=${filter}`;
+      });
+    }
+
     if (blockedChannelData && channelData) {
-      const res = await fetch(
-        `https://api.twitch.tv/helix/streams?first=100&after=${channelData.pagination.cursor}`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: "Bearer hjn4lfvaa9vd04rv4ttw3nlnifndi7",
-            "Client-Id": "hra765tyzo51u6ju9i7ihfmckwzuss",
-          },
-        }
-      );
+      const res = await fetch(`${url}&after=${channelData.pagination.cursor}`, {
+        method: "GET",
+        headers: header,
+      });
 
       const data: fullChannelData = await res.json();
 
@@ -256,9 +273,15 @@ function Channels() {
     });
   };
 
-  const addLanguageFilter = (language: string) => {};
+  const addLanguageFilter = (language: string) => {
+    setLanguageFilter([...languageFilter, language]);
+  };
 
-  const removeLanguageFilter = (language: string) => {};
+  const removeLanguageFilter = (language: string) => {
+    setLanguageFilter(languageFilter.filter((lang) => lang !== language));
+  };
+
+  console.log(languageFilter);
 
   return (
     <div>
@@ -266,6 +289,8 @@ function Channels() {
         channelData={blockedChannelData}
         pageNumber={pageNumber}
         blockChannel={blockChannel}
+        addLanguageFilter={addLanguageFilter}
+        removeLanguageFilter={removeLanguageFilter}
       />
       {blockedChannelData && (
         <Pagination
