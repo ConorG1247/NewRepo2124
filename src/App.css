@@ -123,7 +123,7 @@ a:active {
 .main-container {
   display: flex;
   flex-direction: column;
-  padding-left: 10px;
+  padding-left: 8px;
 }
 
 .main-title {
@@ -289,12 +289,18 @@ a:active {
 
 /* LANGUAGE FILTER */
 
+.channel-language {
+  display: flex;
+  flex-direction: row;
+}
+
 .channel-language-container {
   display: flex;
   position: relative;
   justify-content: space-between;
-  margin: 10px 0px 10px 15px;
-  width: 400px;
+  align-items: center;
+  margin: 15px 0px 15px 10px;
+  width: 300px;
 }
 
 .channel-language-input {
@@ -302,19 +308,21 @@ a:active {
 }
 
 .channel-language-option-container {
-  display: none;
+  visibility: hidden;
+  display: flex;
   flex-direction: column;
   position: absolute;
   overflow: hidden;
   overflow-y: auto;
   width: 208px;
-  max-height: 200px;
+  max-height: 250px;
   top: 30px;
   right: 0;
   border-radius: 5px;
   border: 1px solid rgb(52, 52, 52);
   background-color: rgb(32, 32, 32);
   z-index: 9;
+  transition-delay: 100ms;
 }
 
 .channel-language-option {
@@ -324,11 +332,47 @@ a:active {
 }
 
 .channel-language-container:focus-within .channel-language-option-container {
-  display: flex;
+  visibility: visible;
+  transition-delay: 0ms;
 }
 
 .channel-language-option:hover {
   background-color: rgb(20, 20, 20);
+}
+
+.channel-language-selected-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 0px 10px;
+}
+
+.channel-language-selected {
+  display: flex;
+  align-items: center;
+  background-color: rgb(50, 50, 50);
+  padding: 5px 5px 5px 10px;
+  border-radius: 16px;
+  margin: 10px 10px 10px 0px;
+}
+
+.channel-language-x {
+  cursor: pointer;
+  text-align: center;
+  width: 25px;
+  padding: 0px 1px 2px 1px;
+  border-radius: 50%;
+  margin-left: 8px;
+  background-color: rgb(35, 35, 35);
+  transition: 100ms;
+}
+
+.channel-language-x:hover {
+  background-color: rgb(165, 165, 165);
+}
+
+.channel-language-x:active {
+  background-color: rgb(124, 124, 124);
 }
 
 /* CONTENT */
@@ -514,7 +558,7 @@ a:active {
   padding: 3px 12px 5px 12px;
   margin: 4px 6px 4px 0px;
   border-radius: 16px;
-  background-color: rgb(40, 40, 40);
+  background-color: rgb(50, 50, 50);
 }
 
 /*////////////*/
@@ -701,6 +745,9 @@ a:active {
   .channel-content-title {
     max-width: 346px;
   }
+  .channel-language {
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 40em) {
@@ -709,6 +756,9 @@ a:active {
   }
   .main-content-container {
     padding: 20px 0px 19px 0px;
+  }
+  .main-container {
+    padding-left: 9px;
   }
   .main-title {
     margin-bottom: 10px;
@@ -750,6 +800,12 @@ a:active {
   }
   .header-search {
     width: 50%;
+  }
+  .channel-language-selected {
+    margin: 0px 5px 10px 5px;
+  }
+  .channel-language-container {
+    margin: 10px 0px 10px 15px;
   }
 }
 

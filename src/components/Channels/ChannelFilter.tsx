@@ -4,6 +4,7 @@ import { useState } from "react";
 function ChannelFilter() {
   const [languageInput, setLanguageInput] = useState<string | undefined>();
   const [noResultsCheck, setNoResultsCheck] = useState(false);
+  const [languageSelected, setLanguageSelected] = useState<string[]>([]);
 
   const languageResultsCheck = (input: string) => {
     setLanguageInput(input);
@@ -19,40 +20,68 @@ function ChannelFilter() {
     }
   };
 
+  const selectLanguage = (language: { language: string; code: string }) => {
+    if (
+      languageSelected.filter((lang) => lang === language.language).length > 0
+    ) {
+      return;
+    }
+    setLanguageSelected([...languageSelected, language.language]);
+  };
+
   return (
-    <div className="channel-language-container">
-      <div>Filter by Language: </div>
-      <input
-        className="channel-language-input"
-        onChange={(input) => {
-          languageResultsCheck(input.target.value.toLocaleLowerCase());
-        }}
-      />
-      <div className="channel-language-option-container">
-        {StreamLanguage.map((language, index) => {
-          return (
-            <div key={index}>
-              {languageInput &&
-                language.language
-                  .toLocaleLowerCase()
-                  .includes(languageInput) && (
-                  <div className="channel-language-option">
-                    <div>{language.language}</div>
+    <div className="channel-language">
+      <div className="channel-language-container">
+        <div>Filter by </div>
+        <input
+          className="channel-language-input"
+          onChange={(input) => {
+            languageResultsCheck(input.target.value.toLocaleLowerCase());
+          }}
+        />
+        <div className="channel-language-option-container">
+          {StreamLanguage.map((language, index) => {
+            return (
+              <div key={index}>
+                {languageInput &&
+                  language.language
+                    .toLocaleLowerCase()
+                    .includes(languageInput) && (
+                    <div
+                      className="channel-language-option"
+                      onClick={() => selectLanguage(language)}
+                    >
+                      {language.language}
+                    </div>
+                  )}
+                {!languageInput && (
+                  <div
+                    className="channel-language-option"
+                    onClick={() => selectLanguage(language)}
+                  >
+                    {language.language}
                   </div>
                 )}
-              {!languageInput && (
-                <div className="channel-language-option">
-                  <div>{language.language}</div>
-                </div>
-              )}
+              </div>
+            );
+          })}
+          {noResultsCheck && (
+            <div style={{ borderRadius: "5px", padding: "10px" }}>
+              No results found
             </div>
-          );
-        })}
-        {noResultsCheck && (
-          <div className="channel-language-option">
-            <div>No results found</div>
-          </div>
-        )}
+          )}
+        </div>
+      </div>
+      <div className="channel-language-selected-container">
+        {languageSelected &&
+          languageSelected.map((lang, index) => {
+            return (
+              <div key={index} className="channel-language-selected">
+                <div>{lang}</div>
+                <div className="channel-language-x">x</div>
+              </div>
+            );
+          })}
       </div>
     </div>
   );
