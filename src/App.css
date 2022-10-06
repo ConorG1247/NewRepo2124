@@ -408,6 +408,10 @@ a:active {
 /* CONTENT */
 
 .channel-content-subtitle {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 560px;
   color: rgb(184, 184, 184);
   margin-bottom: 5px;
 }
@@ -639,6 +643,9 @@ a:active {
   .channel-content-title {
     max-width: 500px;
   }
+  .channel-content-subtitle {
+    max-width: 500px;
+  }
   .channel-tags-container {
     max-width: 500px;
   }
@@ -665,6 +672,9 @@ a:active {
     height: 254px;
   }
   .channel-content-title {
+    max-width: 450px;
+  }
+  .channel-content-subtitle {
     max-width: 450px;
   }
   .channel-tags-container {
@@ -709,6 +719,9 @@ a:active {
   .channel-content-title {
     max-width: 400px;
   }
+  .channel-content-subtitle {
+    max-width: 400px;
+  }
   .channel-tags-container {
     max-width: 400px;
   }
@@ -735,6 +748,9 @@ a:active {
     height: 195px;
   }
   .channel-content-title {
+    max-width: 346px;
+  }
+  .channel-content-subtitle {
     max-width: 346px;
   }
   .channel-tags-container {

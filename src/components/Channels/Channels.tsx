@@ -66,7 +66,6 @@ function Channels() {
     let urlLanguageChanges = new Promise<void>((resolve, reject) => {
       userData?.language.forEach((filter, index, array) => {
         url = url + `&language=${filter.code}`;
-        console.log("SUCCEED");
         if (index === array.length - 1) resolve();
       });
     });
@@ -75,7 +74,6 @@ function Channels() {
     });
 
     const getChannelData = async () => {
-      console.log("FAILED");
       const res = await fetch(url, {
         method: "GET",
         headers: header,
