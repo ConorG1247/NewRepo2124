@@ -31,12 +31,15 @@ function CategoryDisplay({
                   .replace("{height}", "380")}
                 alt={game.name}
               />
+              <div
+                onClick={() => blockCategory(game.name, game.id)}
+                className="category-block"
+              >
+                x
+              </div>
             </div>
             <div className="category-game-title" title={game.name}>
               {game.name}
-            </div>
-            <div onClick={() => blockCategory(game.name, game.id)}>
-              Hide Game
             </div>
           </div>
         );

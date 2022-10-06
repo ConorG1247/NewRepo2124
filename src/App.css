@@ -223,6 +223,7 @@ a:active {
 .category-content-container {
   display: flex;
   flex-direction: column;
+  position: relative;
   padding: 10px;
   margin: 10px 10px 10px 0px;
 }
@@ -285,6 +286,10 @@ a:active {
   transform: translate(10px, -10px);
 }
 
+.category-thumbnail-container:hover .category-block {
+  transform: translate(10px, -10px);
+}
+
 .category-thumbnail-container:hover:before {
   transform: rotate(-45deg) scale(1);
 }
@@ -294,10 +299,35 @@ a:active {
 }
 
 .category-game-title {
-  max-width: 280px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  max-width: 280px;
+  padding-top: 8px;
+  font-size: 1.1em;
+  font-weight: 500;
+}
+
+.category-block {
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  top: 2.4%;
+  right: 3.5%;
+  font-size: 1.1em;
+  padding: 2px 4px 4px 3px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: rgb(40, 40, 40, 0.75);
+  transition: 150ms;
+  z-index: 11;
+}
+
+.category-block:hover {
+  background-color: rgb(50, 213, 238);
 }
 
 .category-loading-thumbnail {
@@ -848,6 +878,15 @@ a:active {
   .category-thumbnail {
     width: 220px;
   }
+  .category-thumbnail-container:hover .category-block {
+    transform: translate(10px, -10px);
+  }
+  .category-block {
+    width: 26px;
+    height: 26px;
+    font-size: 0.9em;
+    padding: 2px 3px 4px 4px;
+  }
   .category-loading-thumbnail {
     width: 220px;
     height: 295px;
@@ -912,6 +951,9 @@ a:active {
   }
   .category-thumbnail {
     width: 150px;
+  }
+  .category-thumbnail-container:hover .category-block {
+    transform: translate(7px, -7px);
   }
   .category-loading-thumbnail {
     width: 150px;
