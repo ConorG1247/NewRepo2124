@@ -26,15 +26,14 @@ function Channels() {
       end: number;
     }[]
   >([]);
-  const [blockListData, setBlockListData] = useState<{
+
+  const [userData, setUserData] = useState<{
     blocklist: {
       category: blockListItem[];
       channel: blockListItem[];
     };
+    language: { language: string; code: string }[];
   }>();
-  const [languageFilter, setLanguageFilter] = useState<
-    { language: string; code: string }[]
-  >([]);
 
   useEffect(() => {
     const getBlockListData = async () => {
@@ -45,21 +44,15 @@ function Channels() {
       const data: userData = await res.json();
 
       if (!data.blocklist) {
-        return setBlockListData(undefined);
+        return setUserData({
+          blocklist: { category: [], channel: [] },
+          language: [],
+        });
       }
 
-      setLanguageFilter([...languageFilter, ...data.language]);
-
-      setBlockListData({
-        blocklist: {
-          category: data.blocklist.category,
-          channel: data.blocklist.channel,
-        },
-      });
+      setUserData({ blocklist: data.blocklist, language: data.language });
     };
     getBlockListData();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -68,20 +61,21 @@ function Channels() {
       pagination: { cursor: "" },
     };
 
-    let channelDataTags: fullChannelData = {
-      data: [],
-      pagination: { cursor: "" },
-    };
-
     let url: string = "https://api.twitch.tv/helix/streams?first=100";
 
-    const getChannelData = async () => {
-      if (languageFilter.length > 0) {
-        languageFilter.forEach((filter) => {
-          url = url + `&language=${filter.code}`;
-        });
-      }
+    let urlLanguageChanges = new Promise<void>((resolve, reject) => {
+      userData?.language.forEach((filter, index, array) => {
+        url = url + `&language=${filter.code}`;
+        console.log("SUCCEED");
+        if (index === array.length - 1) resolve();
+      });
+    });
+    urlLanguageChanges.then(() => {
+      getChannelData();
+    });
 
+    const getChannelData = async () => {
+      console.log("FAILED");
       const res = await fetch(url, {
         method: "GET",
         headers: header,
@@ -115,23 +109,16 @@ function Channels() {
         }
       }
 
-      // updatedChannelData.data.forEach((channel) => {
-      //   channelDataTags = {
-      //     data: [...channelDataTags.data, { ...channel, tags: [] }],
-      //     pagination: data.pagination,
-      //   };
-      // });
-
       setChannelData({
         data: updatedChannelData.data,
         pagination: updatedChannelData.pagination,
       });
     };
 
-    getChannelData();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageFilter, blockListData]);
+    if (userData) {
+      getChannelData();
+    }
+  }, [userData]);
 
   useEffect(() => {
     if (channelData) {
@@ -148,14 +135,16 @@ function Channels() {
         };
       });
 
-      if (blockListData && blockListData?.blocklist.channel.length > 0) {
-        blockListData?.blocklist.channel.forEach((blockedChannels) => {
+      if (userData && userData.blocklist.channel.length > 0) {
+        userData.blocklist.channel.forEach((blockedChannels) => {
           channelDataTags.data = channelDataTags.data.filter((channel: any) => {
             return blockedChannels.id !== channel.user_id;
           });
         });
+      }
 
-        blockListData?.blocklist.category.forEach((blockedCategories) => {
+      if (userData && userData.blocklist.category.length > 0) {
+        userData.blocklist.category.forEach((blockedCategories) => {
           channelDataTags.data = channelDataTags.data.filter((game: any) => {
             return blockedCategories.id !== game.game_id;
           });
@@ -180,13 +169,13 @@ function Channels() {
         pagination: channelData.pagination,
       });
     }
-  }, [blockListData, channelData]);
+  }, [userData, channelData]);
 
   const nextChannelPage = async () => {
     let url: string = "https://api.twitch.tv/helix/streams?first=100";
 
-    if (languageFilter.length > 0) {
-      languageFilter.forEach((filter) => {
+    if (userData && userData.language.length > 0) {
+      userData.language.forEach((filter) => {
         url = url + `&language=${filter.code}`;
       });
     }
@@ -267,11 +256,25 @@ function Channels() {
   };
 
   const addLanguageFilter = (language: { language: string; code: string }) => {
-    setLanguageFilter([...languageFilter, { ...language }]);
+    // setLanguageFilter([...languageFilter, { ...language }]);
+
+    if (userData)
+      setUserData({
+        blocklist: { ...userData.blocklist },
+        language: [...userData.language, language],
+      });
   };
 
   const removeLanguageFilter = (language: string) => {
-    setLanguageFilter(languageFilter.filter((lang) => lang.code !== language));
+    // setLanguageFilter(languageFilter.filter((lang) => lang.code !== language));
+
+    if (userData)
+      setUserData({
+        blocklist: { ...userData.blocklist },
+        language: [
+          ...userData.language.filter((lang) => lang.code !== language),
+        ],
+      });
   };
 
   return (
