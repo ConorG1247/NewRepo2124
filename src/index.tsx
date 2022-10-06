@@ -7,6 +7,9 @@ import Error from "Error";
 import CategoryDirectory from "components/Directory/CategoryDirectory";
 import ChannelDirectory from "components/Directory/ChannelDirectory";
 import Authorization from "components/Authorization";
+import CategorySelect from "components/Categories/CategorySelect/CategorySelect";
+import Category from "components/Categories/CategorySelect/Category";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -24,6 +27,10 @@ const router = createBrowserRouter([
   {
     path: "auth",
     element: <Authorization />,
+  },
+  {
+    path: "directory/categories/:category",
+    element: <Category />,
   },
 ]);
 

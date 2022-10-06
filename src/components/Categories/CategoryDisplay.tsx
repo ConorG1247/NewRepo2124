@@ -1,4 +1,5 @@
 import { fullGameData } from "libs/types";
+import { Link } from "react-router-dom";
 
 function CategoryDisplay({
   categoryData,
@@ -24,13 +25,15 @@ function CategoryDisplay({
         return (
           <div className="category-content-container" key={index}>
             <div className="category-thumbnail-container">
-              <img
-                className="category-thumbnail"
-                src={game.box_art_url
-                  .replace("{width}", "285")
-                  .replace("{height}", "380")}
-                alt={game.name}
-              />
+              <Link to={`/directory/categories/${game.id}`}>
+                <img
+                  className="category-thumbnail"
+                  src={game.box_art_url
+                    .replace("{width}", "285")
+                    .replace("{height}", "380")}
+                  alt={game.name}
+                />
+              </Link>
               <div
                 onClick={() => blockCategory(game.name, game.id)}
                 className="category-block"
