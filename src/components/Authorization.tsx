@@ -3,6 +3,7 @@ import { Navigate } from "react-router-dom";
 
 function Authorization() {
   const [redirect, setRedirect] = useState(false);
+  const [bearerCheck, setBearerCheck] = useState(false);
 
   const url = window.location.href;
 
@@ -25,21 +26,41 @@ function Authorization() {
 
         const data = await res.json();
 
-        console.log(data);
-
         if (!data.access_token) {
           return;
         }
 
-        console.log(data);
-
         localStorage.setItem("auth", data.access_token);
+
+        setBearerCheck(true);
       }
     };
     getUserBearerToken();
 
     setRedirect(true);
   }, [url]);
+
+  useEffect(() => {
+    const getUserData = async () => {
+      const res = await fetch("https://api.twitch.tv/helix/users", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("auth")}`,
+          "Client-Id": `${process.env.REACT_APP_CLIENT_ID}`,
+        },
+      });
+      const data = await res.json();
+
+      if (!data.data[0]) {
+        return;
+      }
+
+      localStorage.setItem("user-avatar", data.data[0].profile_image_url);
+      localStorage.setItem("twitch-username", data.data[0].display_name);
+    };
+
+    getUserData();
+  }, [bearerCheck]);
 
   return (
     <div>

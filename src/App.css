@@ -609,7 +609,7 @@ a:active {
 .channel-tags-container {
   display: flex;
   flex-wrap: wrap;
-  max-width: 346px;
+  max-width: 560px;
 }
 
 .channel-tags-content {

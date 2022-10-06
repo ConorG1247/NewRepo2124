@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import UserDisplay from "./UserDisplay";
 
 function Header() {
   useEffect(() => {
@@ -17,7 +18,7 @@ function Header() {
       </Link>
       <div className="header-dashboard">Browse</div>
       <input className="header-search" placeholder="Search" />
-      <div className="header-user">User</div>
+      <UserDisplay />
     </div>
   );
 }
