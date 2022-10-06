@@ -204,17 +204,17 @@ function Channels() {
       end: pageNumber.end + 60,
     });
 
-    if (paginationData.length === 0) {
-      return setPaginationData([{ page: 1, start: 0, end: 60 }]);
-    }
-    setPaginationData([
-      ...paginationData,
-      {
-        page: paginationData.length + 1,
-        start: pageNumber.start,
-        end: pageNumber.end,
-      },
-    ]);
+    // if (paginationData.length === 0) {
+    //   return setPaginationData([{ page: 1, start: 0, end: 60 }]);
+    // }
+    // setPaginationData([
+    //   ...paginationData,
+    //   {
+    //     page: paginationData.length + 1,
+    //     start: pageNumber.start,
+    //     end: pageNumber.end,
+    //   },
+    // ]);
   };
 
   const prevChannelPage = () => {
@@ -261,8 +261,6 @@ function Channels() {
   };
 
   const addLanguageFilter = (language: { language: string; code: string }) => {
-    // setLanguageFilter([...languageFilter, { ...language }]);
-
     if (userData)
       setUserData({
         blocklist: { ...userData.blocklist },
@@ -271,8 +269,6 @@ function Channels() {
   };
 
   const removeLanguageFilter = (language: string) => {
-    // setLanguageFilter(languageFilter.filter((lang) => lang.code !== language));
-
     if (userData)
       setUserData({
         blocklist: { ...userData.blocklist },

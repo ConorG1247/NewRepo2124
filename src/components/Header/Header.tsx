@@ -14,10 +14,18 @@ function Header() {
   return (
     <div className="header-container">
       <Link to="/">
-        <div className="header-dashboard">Dashboard</div>
+        <img
+          className="header-dashboard"
+          src={require("images/TwitchLogo.png")}
+          alt="twitch-logo"
+        />
       </Link>
-      <div className="header-dashboard">Browse</div>
-      <input className="header-search" placeholder="Search" />
+      <div className="header-mid-container">
+        <Link to="/directory/categories">
+          <div className="header-browse">Browse</div>
+        </Link>
+        <input className="header-search" placeholder="Search" />
+      </div>
       <UserDisplay />
     </div>
   );

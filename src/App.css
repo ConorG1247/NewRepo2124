@@ -62,28 +62,80 @@ a:active {
 .header-container {
   display: flex;
   position: sticky;
-  justify-content: space-between;
+  justify-content: flex-start;
+  align-items: center;
   top: 0;
   width: 100%;
-  padding: 30px 0px 30px 0px;
+  padding: 25px 0px 25px 0px;
   border-bottom: 1px solid rgb(95, 95, 95);
   background-color: rgb(28, 28, 28);
   z-index: 10;
 }
 
+.header-mid-container {
+  display: flex;
+  justify-content: space-between;
+  width: 52%;
+  margin-left: 150px;
+}
+
 .header-dashboard {
   display: flex;
   justify-content: center;
-  padding-left: 10px;
+  position: absolute;
+  top: 20px;
+  left: 0;
+  padding-left: 20px;
+  width: 50px;
+  height: 50px;
+}
+
+.header-browse {
+  display: flex;
+  cursor: pointer;
+  padding-left: 20px;
+  width: 50px;
+  font-size: 1.5em;
+  transition: 50ms;
+}
+
+.header-browse:hover {
+  color: rgb(50, 213, 238);
 }
 
 .header-search {
+  font-size: 1em;
+  padding: 5px 5px 5px 10px;
+  width: 35%;
+  height: 1.5em;
+  border-radius: 5px;
+  color: rgb(201, 201, 201);
+  border: 2.5px solid rgb(70, 70, 70);
+  background-color: rgb(60, 60, 60);
+  transition: 100ms;
+}
+
+.header-search:hover {
+  border: 2.5px solid rgb(109, 109, 109);
+}
+
+.header-search::placeholder {
+  color: rgb(201, 201, 201);
+}
+
+.header-search:focus {
+  border-color: rgb(222, 222, 222, 0.6);
+  outline: 0 none;
 }
 
 .header-user {
   display: flex;
   justify-content: center;
-  padding-right: 10px;
+  position: absolute;
+  right: 0;
+  padding-right: 20px;
+  width: 50px;
+  height: 50px;
 }
 
 /*/////////*/
@@ -146,8 +198,11 @@ a:active {
 }
 
 .main-selection-selected {
-  color: rgb(154, 242, 255);
-  border-bottom: 2px solid rgb(154, 242, 255, 1);
+  /* color: rgb(154, 242, 255);
+  border-bottom: 2px solid rgb(154, 242, 255, 1); */
+  color: rgb(50, 213, 238);
+  border-bottom: 2px solid rgb(50, 213, 238, 1);
+
   transition: 100ms;
 }
 
@@ -868,15 +923,31 @@ a:active {
   .channel-display-container {
     padding-left: 5px;
   }
-  .header-search {
-    width: 50%;
-  }
   .channel-language-selected-container {
     padding: 0px 10px 0px 14px;
   }
-
   .channel-language-container {
     margin: 10px 0px 10px 15px;
+  }
+  .header-container {
+    justify-content: center;
+  }
+  .header-mid-container {
+    width: auto;
+    justify-content: center;
+    margin-left: 0px;
+  }
+  .header-search {
+    width: 70%;
+  }
+  .header-user {
+    padding-right: 10px;
+  }
+  .header-dashboard {
+    padding-left: 10px;
+  }
+  .header-browse {
+    display: none;
   }
 }
 
