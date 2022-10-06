@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Error from "Error";
 import CategoryDirectory from "components/Directory/CategoryDirectory";
 import ChannelDirectory from "components/Directory/ChannelDirectory";
+import Authorization from "components/Authorization";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: "directory/channels",
     element: <ChannelDirectory />,
+  },
+  {
+    path: "auth",
+    element: <Authorization />,
   },
 ]);
 

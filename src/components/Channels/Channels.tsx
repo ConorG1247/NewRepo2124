@@ -10,7 +10,11 @@ import ChannelDisplay from "./ChannelDisplay";
 import { StreamTags } from "libs/StreamTags";
 
 const header = {
-  Authorization: "Bearer hjn4lfvaa9vd04rv4ttw3nlnifndi7",
+  Authorization: `Bearer ${
+    localStorage.getItem("auth")
+      ? localStorage.getItem("auth")
+      : "hjn4lfvaa9vd04rv4ttw3nlnifndi7"
+  }`,
   "Client-Id": "hra765tyzo51u6ju9i7ihfmckwzuss",
 };
 

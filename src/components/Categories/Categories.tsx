@@ -9,6 +9,15 @@ import {
 import CategoryDisplay from "./CategoryDisplay";
 import Pagination from "components/Pagination/Pagination";
 
+const header = {
+  Authorization: `Bearer ${
+    localStorage.getItem("auth")
+      ? localStorage.getItem("auth")
+      : "hjn4lfvaa9vd04rv4ttw3nlnifndi7"
+  }`,
+  "Client-Id": "hra765tyzo51u6ju9i7ihfmckwzuss",
+};
+
 function Categories() {
   const [gameData, setGameData] = useState<fullGameData>();
   const [blockedGameData, setBlockedGameData] = useState<fullGameData>();
@@ -48,10 +57,7 @@ function Categories() {
         "https://api.twitch.tv/helix/games/top?first=100",
         {
           method: "GET",
-          headers: {
-            Authorization: "Bearer hjn4lfvaa9vd04rv4ttw3nlnifndi7",
-            "Client-Id": "hra765tyzo51u6ju9i7ihfmckwzuss",
-          },
+          headers: header,
         }
       );
 
@@ -90,10 +96,7 @@ function Categories() {
         `https://api.twitch.tv/helix/games/top?first=100&after=${blockedGameData?.pagination.cursor}`,
         {
           method: "GET",
-          headers: {
-            Authorization: "Bearer hjn4lfvaa9vd04rv4ttw3nlnifndi7",
-            "Client-Id": "hra765tyzo51u6ju9i7ihfmckwzuss",
-          },
+          headers: header,
         }
       );
 
