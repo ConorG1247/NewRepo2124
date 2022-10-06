@@ -24,9 +24,12 @@ function Categories() {
 
   useEffect(() => {
     const getBlockListData = async () => {
-      const res = await fetch("http://localhost:3001/get/all/guest", {
-        method: "GET",
-      });
+      const res = await fetch(
+        `http://localhost:3001/get/all/${localStorage.getItem("username")}`,
+        {
+          method: "GET",
+        }
+      );
 
       const data: userData = await res.json();
 
@@ -152,7 +155,7 @@ function Categories() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        user: "guest",
+        user: localStorage.getItem("username"),
         name: categoryName,
         id: categoryId,
       }),

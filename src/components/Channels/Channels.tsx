@@ -37,9 +37,12 @@ function Channels() {
 
   useEffect(() => {
     const getBlockListData = async () => {
-      const res = await fetch("http://localhost:3001/get/all/guest", {
-        method: "GET",
-      });
+      const res = await fetch(
+        `http://localhost:3001/get/all/${localStorage.getItem("username")}`,
+        {
+          method: "GET",
+        }
+      );
 
       const data: userData = await res.json();
 
@@ -63,7 +66,7 @@ function Channels() {
 
     let url: string = "https://api.twitch.tv/helix/streams?first=100";
 
-    let urlLanguageChanges = new Promise<void>((resolve, reject) => {
+    let urlLanguageChanges = new Promise<void>((resolve) => {
       userData?.language.forEach((filter, index, array) => {
         url = url + `&language=${filter.code}`;
         if (index === array.length - 1) resolve();
@@ -246,7 +249,7 @@ function Channels() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        user: "guest",
+        user: localStorage.getItem("username"),
         name: channelName,
         id: channelId,
       }),

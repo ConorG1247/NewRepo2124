@@ -17,9 +17,12 @@ function ChannelFilter({
 
   useEffect(() => {
     const getLanguageData = async () => {
-      const res = await fetch("http://localhost:3001/get/all/guest", {
-        method: "GET",
-      });
+      const res = await fetch(
+        `http://localhost:3001/get/all/${localStorage.getItem("username")}`,
+        {
+          method: "GET",
+        }
+      );
 
       const data: userData = await res.json();
 
@@ -66,7 +69,7 @@ function ChannelFilter({
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        user: "guest",
+        user: localStorage.getItem("username"),
         language: { language: language.language, code: language.code },
       }),
     });
@@ -87,7 +90,7 @@ function ChannelFilter({
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        user: "guest",
+        user: localStorage.getItem("username"),
         language: { language: language.language, code: language.code },
       }),
     });
