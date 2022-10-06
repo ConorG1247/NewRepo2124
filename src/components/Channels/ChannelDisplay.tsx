@@ -93,6 +93,7 @@ function ChannelDisplay({
                     <FontAwesomeIcon icon={faClock} className="channel-clock" />{" "}
                     {channel.uptime}
                   </div>
+                  <div className="channel-live">LIVE</div>
                 </div>
                 <a href={`https://twitch.tv/${channel.user_login}`}>
                   <div className="channel-content-title" title={channel.title}>

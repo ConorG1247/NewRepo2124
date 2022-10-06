@@ -503,7 +503,7 @@ a:active {
   align-items: center;
   top: 86%;
   left: 2%;
-  padding: 0px 10px 3px 10px;
+  padding: 2px 10px 4px 10px;
   border-radius: 5px;
   font-size: 1.1em;
   background-color: rgba(20, 20, 20, 0.65);
@@ -519,7 +519,7 @@ a:active {
   cursor: pointer;
   top: 3.7%;
   right: 2.5%;
-  padding: 0px 4px 7px 4px;
+  padding: 2px 4px 5px 4px;
   width: 26px;
   height: 26px;
   border-radius: 50%;
@@ -543,7 +543,7 @@ a:active {
   align-items: center;
   top: 3.7%;
   right: 10%;
-  padding: 0px 10px 3px 10px;
+  padding: 3px 10px 3px 10px;
   border-radius: 5px;
   font-size: 1.1em;
   background-color: rgb(40, 40, 40, 0.75);
@@ -556,6 +556,22 @@ a:active {
   width: 20px;
   padding-top: 2px;
   margin-right: 5px;
+}
+
+.channel-live {
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  top: 3.7%;
+  left: 2%;
+  padding: 3px 10px 3px 10px;
+  border-radius: 5px;
+  font-size: 1.1em;
+  font-weight: 600;
+  background-color: #eb0400;
+  transition: 150ms;
+  z-index: 8;
 }
 
 /* LOADING */
