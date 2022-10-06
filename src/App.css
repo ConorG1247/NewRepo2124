@@ -488,6 +488,10 @@ a:active {
   transform: translate(9px, -9px);
 }
 
+.channel-thumbnail-container:hover .channel-live {
+  transform: translate(9px, -9px);
+}
+
 .channel-thumbnail-container:hover:before {
   transform: rotate(-45deg) scale(1);
 }
