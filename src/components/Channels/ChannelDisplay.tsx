@@ -6,6 +6,7 @@ import { faClock } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ChannelLoading from "./ChannelLoading";
 import ChannelFilter from "./ChannelFilter";
+import { Link } from "react-router-dom";
 
 function ChannelDisplay({
   channelData,
@@ -103,12 +104,15 @@ function ChannelDisplay({
                 <div className="channel-content-subtitle">
                   {channel.user_name}
                 </div>
-                <div
-                  className="channel-content-subtitle"
-                  title={channel.game_name}
-                >
-                  {channel.game_name}
-                </div>
+                <Link to={`/directory/categories/${channel.game_id}`}>
+                  <div
+                    className="channel-content-subtitle"
+                    title={channel.game_name}
+                  >
+                    {channel.game_name}
+                  </div>
+                </Link>
+
                 <div className="channel-tags-container">
                   {channel?.tags?.map((tag, index) => {
                     return (
