@@ -10,7 +10,9 @@
 <a href="#%EF%B8%8F-future-plans"> Roadmap </a>
 </p>
 
-### <a align="center" href="https://improved-twitch.netlify.app/directory/categories">Demo Improved Twitch</a>
+<p align="center">
+<a href="https://improved-twitch.netlify.app/directory/categories">Improved Twitch</a>
+</p>
 
 <img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png"/>
 
