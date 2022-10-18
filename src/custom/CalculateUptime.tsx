@@ -34,6 +34,7 @@ function CalculateUptime(channel: individualChannelData) {
       channel.started_at.split("T")[0].replaceAll("-", "").slice(7)
   );
   const today = new Date();
+  console.log(today);
   const date =
     today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
 
