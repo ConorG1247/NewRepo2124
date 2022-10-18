@@ -24,7 +24,7 @@
 
 <img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png"/>
 
-## 🎬 Idea for the app
+## 💡 Idea for the app
 
 I've used Twitch for over 8 years now and there's some functionality that I would like built into the website without having to use extensions.
 
