@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import UserDisplay from "./UserDisplay";
+import {} from "@fortawesome/free-regular-svg-icons"
 
 function Header() {
   useEffect(() => {

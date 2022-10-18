@@ -42,7 +42,9 @@ function CategorySelect() {
   useEffect(() => {
     const getBlockListData = async () => {
       const res = await fetch(
-        `http://localhost:3001/get/all/${localStorage.getItem("username")}`,
+        `${process.env.REACT_APP_URI}/get/all/${localStorage.getItem(
+          "username"
+        )}`,
         {
           method: "GET",
         }
@@ -251,7 +253,7 @@ function CategorySelect() {
       });
     }
 
-    await fetch("http://localhost:3001/add/channel", {
+    await fetch(`${process.env.REACT_APP_URI}/add/channel`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

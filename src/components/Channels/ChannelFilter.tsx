@@ -18,7 +18,9 @@ function ChannelFilter({
   useEffect(() => {
     const getLanguageData = async () => {
       const res = await fetch(
-        `http://localhost:3001/get/all/${localStorage.getItem("username")}`,
+        `${process.env.REACT_APP_URI}/get/all/${localStorage.getItem(
+          "username"
+        )}`,
         {
           method: "GET",
         }
@@ -65,7 +67,7 @@ function ChannelFilter({
     setLanguageSelected([...languageSelected, language]);
     setLanguageInput("");
 
-    await fetch("http://localhost:3001/add/language", {
+    await fetch(`${process.env.REACT_APP_URI}/add/language`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -86,7 +88,7 @@ function ChannelFilter({
       })
     );
 
-    await fetch("http://localhost:3001/remove/language", {
+    await fetch(`${process.env.REACT_APP_URI}/remove/language`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
