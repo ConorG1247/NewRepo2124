@@ -10,7 +10,7 @@
 <a href="#%EF%B8%8F-future-plans"> Roadmap </a>
 </p>
 
-<a href="https://improved-twitch.netlify.app/directory/categories"><h3 align="center">Improved Twitch</h3></a>
+### <a align="center" href="https://improved-twitch.netlify.app/directory/categories">Demo Improved Twitch</a>
 
 <img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png"/>
 
@@ -79,7 +79,6 @@ Ability to filter live channels by category (top channels in the category).
 ### <a href="https://improved-twitch.netlify.app/directory/categories">Demo Improved Twitch</a>
 
  <img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png"/>
-
 
 ## ➡️ Future Plans
 
