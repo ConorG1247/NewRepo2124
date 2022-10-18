@@ -29,12 +29,20 @@ function convertSecToTime(time: any) {
 
 // Function to find the time gap
 function CalculateUptime(channel: individualChannelData) {
-  const channelStartDate = Number(
+  let channelStartDate = Number(
     channel.started_at.split("T")[0].replaceAll("-", "").slice(0, 6) +
       channel.started_at.split("T")[0].replaceAll("-", "").slice(7)
   );
+
+  if (channel.started_at.split("T")[0].replaceAll("-", "").length === 8) {
+    channelStartDate = Number(
+      channel.started_at.split("T")[0].replaceAll("-", "").slice(0, 8) +
+        channel.started_at.split("T")[0].replaceAll("-", "").slice(8)
+    );
+  }
+
   const today = new Date();
-  console.log(today);
+
   const date =
     today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
 
